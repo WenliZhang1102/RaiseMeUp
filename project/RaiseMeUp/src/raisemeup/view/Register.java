@@ -6,6 +6,7 @@
 package raisemeup.view;
 
 import java.util.Arrays;
+import java.util.regex.Pattern;
 import raisemeup.control.RaiseMeUp;
 
 /**
@@ -14,6 +15,10 @@ import raisemeup.control.RaiseMeUp;
  */
 public class Register extends javax.swing.JFrame {
 
+    private static final Pattern rfc2822 = Pattern.compile(
+        "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
+    );
+    
     /**
      * Creates new form Register
      */
@@ -173,7 +178,31 @@ public class Register extends javax.swing.JFrame {
     }//GEN-LAST:event_butLogin2ActionPerformed
 
     private void butConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butConfirmActionPerformed
-        RaiseMeUp.newUser(0, txtEmail.getText(), txtUsername.getText(), new String(pwfRegister.getPassword()));
+        
+        if(!new String(pwfRegister.getPassword()).equals(new String(pwfRegister2.getPassword())))
+        {
+            RaiseMeUp.setErrorMessage(new ErrorMessage("The two passwords aren't matching!"));
+            RaiseMeUp.getErrorMessage().setVisible(true);
+        }
+        else if("".equals(txtUsername.getText()) || "".equals(txtEmail.getText()) || "".equals(new String(pwfRegister.getPassword()))) {
+            RaiseMeUp.setErrorMessage(new ErrorMessage("You didn't fill all the fields!"));
+            RaiseMeUp.getErrorMessage().setVisible(true);
+        }
+        else if(!rfc2822.matcher(txtEmail.getText()).matches()) {
+            RaiseMeUp.setErrorMessage(new ErrorMessage("This is not a valid e-mail adress!"));
+            RaiseMeUp.getErrorMessage().setVisible(true);
+        }
+        else if(RaiseMeUp.doesUserExist(txtUsername.getText())) {
+            RaiseMeUp.setErrorMessage(new ErrorMessage("This username already exists!"));
+            RaiseMeUp.getErrorMessage().setVisible(true);
+        }
+        else {
+            RaiseMeUp.newUser(0, txtEmail.getText(), txtUsername.getText(), new String(pwfRegister.getPassword()));
+            RaiseMeUp.setLogin(new Login());
+            this.setVisible(false);
+            RaiseMeUp.getLogin().setVisible(true);
+        }
+        
     }//GEN-LAST:event_butConfirmActionPerformed
 
     /**

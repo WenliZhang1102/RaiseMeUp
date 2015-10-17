@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import raisemeup.model.DAO;
 import raisemeup.model.beans.User;
 import raisemeup.model.beans.UserBuilder;
+import raisemeup.view.ErrorMessage;
 import raisemeup.view.Login;
 import raisemeup.view.PetWindow;
 import raisemeup.view.Register;
@@ -23,11 +24,14 @@ public class RaiseMeUp {
     private static Register register;
     private static PetWindow petWindow;
     private static DAO dao;
+    private static ErrorMessage errorMessage;
     
     public static void init() {
         if(getLogin()==null) setLogin(new Login());
         if(getRegister()==null) setRegister(new Register());
         if(getPetWindow()==null) setPetWindow(new PetWindow());
+        if(getErrorMessage()==null) setErrorMessage(new ErrorMessage(""));
+        
         if(getDao()==null) try {
             setDao(new DAO());
         } catch (ClassNotFoundException ex) {
@@ -137,6 +141,30 @@ public class RaiseMeUp {
             return false;
         }
         return true;
+    }
+    
+    public static boolean doesUserExist(String username) {
+        UserBuilder ub = new UserBuilder().setUsername(username);
+        try {
+            return dao.checkIfUserExists(ub.createUser());
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Cannot check if user already exists!", ex);
+        }
+        return true;
+    }
+
+    /**
+     * @return the errorMessage
+     */
+    public static ErrorMessage getErrorMessage() {
+        return errorMessage;
+    }
+
+    /**
+     * @param aErrorMessage the errorMessage to set
+     */
+    public static void setErrorMessage(ErrorMessage aErrorMessage) {
+        errorMessage = aErrorMessage;
     }
     
     
