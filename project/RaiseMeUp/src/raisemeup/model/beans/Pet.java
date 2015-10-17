@@ -13,29 +13,20 @@ import java.util.List;
  * @author Kicsi Andras
  */
 public class Pet {
-    private User owner;
+    private int owner;
     private String name;
+    private String type;
+    private String variant;
     private int hunger;
     private int energy;
     private int fun;
     private int hygiene;
     private int age;
+    private String image;
     private List<Item> owneditems = new ArrayList<Item>();
     private int money;
 
-    /**
-     * @return the owner
-     */
-    public User getOwner() {
-        return owner;
-    }
-
-    /**
-     * @param owner the owner to set
-     */
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
+    
 
     /**
      * @return the name
@@ -147,6 +138,62 @@ public class Pet {
      */
     public void setMoney(int money) {
         this.money = money;
+    }
+
+    /**
+     * @return the type
+     */
+    public String getType() {
+        return type;
+    }
+
+    /**
+     * @param type the type to set
+     */
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    /**
+     * @return the variant
+     */
+    public String getVariant() {
+        return variant;
+    }
+
+    /**
+     * @param variant the variant to set
+     */
+    public void setVariant(String variant) {
+        this.variant = variant;
+    }
+
+    /**
+     * @return the image
+     */
+    public String getImage() {
+        return image;
+    }
+
+    /**
+     * @param image the image to set
+     */
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    /**
+     * @return the owner
+     */
+    public int getOwner() {
+        return owner;
+    }
+
+    /**
+     * @param owner the owner to set
+     */
+    public void setOwner(int owner) {
+        this.owner = owner;
     }
     
     
