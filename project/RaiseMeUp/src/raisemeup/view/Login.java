@@ -32,7 +32,7 @@ public class Login extends javax.swing.JFrame {
         lblLogo = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         butLogin = new javax.swing.JButton();
-        butLogin1 = new javax.swing.JButton();
+        butRegister = new javax.swing.JButton();
         butLogin2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txtLogin = new javax.swing.JTextField();
@@ -55,12 +55,12 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        butLogin1.setFont(new java.awt.Font("Hobo Std", 0, 14)); // NOI18N
-        butLogin1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/RegisterButton.png"))); // NOI18N
-        butLogin1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        butLogin1.addActionListener(new java.awt.event.ActionListener() {
+        butRegister.setFont(new java.awt.Font("Hobo Std", 0, 14)); // NOI18N
+        butRegister.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/RegisterButton.png"))); // NOI18N
+        butRegister.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        butRegister.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                butLogin1ActionPerformed(evt);
+                butRegisterActionPerformed(evt);
             }
         });
 
@@ -106,7 +106,7 @@ public class Login extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(butLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(butLogin1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(butRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(butLogin2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
@@ -114,22 +114,22 @@ public class Login extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(44, 44, 44)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(5, 5, 5)
+                        .addGap(43, 43, 43)
                         .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(13, 13, 13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(pwfLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(butLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(butLogin1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(butRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(butLogin2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -138,11 +138,12 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void butLogin1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butLogin1ActionPerformed
+    private void butRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butRegisterActionPerformed
+        //Register
         RaiseMeUp.setRegister(new Register());
         this.setVisible(false);
         RaiseMeUp.getRegister().setVisible(true);
-    }//GEN-LAST:event_butLogin1ActionPerformed
+    }//GEN-LAST:event_butRegisterActionPerformed
 
     private void butLogin2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butLogin2ActionPerformed
         System.exit(EXIT_ON_CLOSE);
@@ -189,8 +190,8 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton butLogin;
-    private javax.swing.JButton butLogin1;
     private javax.swing.JButton butLogin2;
+    private javax.swing.JButton butRegister;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lblLogo;

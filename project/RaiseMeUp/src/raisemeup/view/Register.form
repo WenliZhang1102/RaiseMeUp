@@ -45,7 +45,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="butLogin" min="-2" pref="153" max="-2" attributes="0"/>
+                      <Component id="butBack" min="-2" pref="153" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="butConfirm" max="32767" attributes="0"/>
                   </Group>
@@ -64,8 +64,8 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="lblLogo" min="-2" pref="171" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="lblLogo" min="-2" pref="160" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace pref="1" max="-2" attributes="0"/>
@@ -90,7 +90,7 @@
               </Group>
               <EmptySpace pref="8" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="butLogin" alignment="0" min="-2" pref="45" max="-2" attributes="0"/>
+                  <Component id="butBack" alignment="0" min="-2" pref="45" max="-2" attributes="0"/>
                   <Component id="butConfirm" alignment="0" min="-2" pref="45" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -116,7 +116,7 @@
         <Property name="text" type="java.lang.String" value="Password:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="butLogin">
+    <Component class="javax.swing.JButton" name="butBack">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Hobo Std" size="14" style="0"/>
@@ -129,7 +129,7 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="butLoginActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="butBackActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="butConfirm">

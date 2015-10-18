@@ -37,7 +37,7 @@ public class Register extends javax.swing.JFrame {
 
         lblLogo = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        butLogin = new javax.swing.JButton();
+        butBack = new javax.swing.JButton();
         butConfirm = new javax.swing.JButton();
         butLogin2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -56,12 +56,12 @@ public class Register extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Hobo Std", 0, 18)); // NOI18N
         jLabel2.setText("Password:");
 
-        butLogin.setFont(new java.awt.Font("Hobo Std", 0, 14)); // NOI18N
-        butLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BackButton.png"))); // NOI18N
-        butLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        butLogin.addActionListener(new java.awt.event.ActionListener() {
+        butBack.setFont(new java.awt.Font("Hobo Std", 0, 14)); // NOI18N
+        butBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BackButton.png"))); // NOI18N
+        butBack.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        butBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                butLoginActionPerformed(evt);
+                butBackActionPerformed(evt);
             }
         });
 
@@ -122,7 +122,7 @@ public class Register extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(butLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(butBack, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(butConfirm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(butLogin2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -136,8 +136,8 @@ public class Register extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -157,7 +157,7 @@ public class Register extends javax.swing.JFrame {
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(butLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(butBack, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(butConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(butLogin2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -167,11 +167,11 @@ public class Register extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void butLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butLoginActionPerformed
+    private void butBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butBackActionPerformed
         RaiseMeUp.setLogin(new Login());
         this.setVisible(false);
         RaiseMeUp.getLogin().setVisible(true);
-    }//GEN-LAST:event_butLoginActionPerformed
+    }//GEN-LAST:event_butBackActionPerformed
 
     private void butLogin2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butLogin2ActionPerformed
         System.exit(EXIT_ON_CLOSE);
@@ -241,8 +241,8 @@ public class Register extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton butBack;
     private javax.swing.JButton butConfirm;
-    private javax.swing.JButton butLogin;
     private javax.swing.JButton butLogin2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

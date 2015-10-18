@@ -49,7 +49,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="butLogin" min="-2" pref="121" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="butLogin1" min="-2" pref="121" max="-2" attributes="0"/>
+                              <Component id="butRegister" min="-2" pref="121" max="-2" attributes="0"/>
                           </Group>
                           <Component id="butLogin2" alignment="0" max="32767" attributes="0"/>
                       </Group>
@@ -63,18 +63,18 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="lblLogo" min="-2" pref="171" max="-2" attributes="0"/>
+              <Component id="lblLogo" min="-2" pref="133" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                       <Component id="txtLogin" min="-2" pref="27" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="pwfLogin" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
@@ -82,7 +82,7 @@
               <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="butLogin" min="-2" pref="45" max="-2" attributes="0"/>
-                  <Component id="butLogin1" min="-2" pref="45" max="-2" attributes="0"/>
+                  <Component id="butRegister" min="-2" pref="45" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="butLogin2" min="-2" pref="45" max="-2" attributes="0"/>
@@ -123,7 +123,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="butLoginActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="butLogin1">
+    <Component class="javax.swing.JButton" name="butRegister">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Hobo Std" size="14" style="0"/>
@@ -136,7 +136,7 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="butLogin1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="butRegisterActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="butLogin2">
