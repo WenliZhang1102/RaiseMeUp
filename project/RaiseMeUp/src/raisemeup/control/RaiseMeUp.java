@@ -4,13 +4,18 @@ package raisemeup.control;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import raisemeup.model.DAO;
+import raisemeup.model.beans.Pet;
 import raisemeup.model.beans.User;
 import raisemeup.model.beans.UserBuilder;
 import raisemeup.view.ErrorMessage;
 import raisemeup.view.Login;
+import raisemeup.view.PetChooser;
+import raisemeup.view.PetCreator;
 import raisemeup.view.PetWindow;
 import raisemeup.view.Register;
 
@@ -25,12 +30,17 @@ public class RaiseMeUp {
     private static PetWindow petWindow;
     private static DAO dao;
     private static ErrorMessage errorMessage;
+    private static PetChooser petChooser;
+    private static PetCreator petCreator;
+    
+    
+    private static User currentUser;
     
     public static void init() {
         if(getLogin()==null) setLogin(new Login());
-        if(getRegister()==null) setRegister(new Register());
-        if(getPetWindow()==null) setPetWindow(new PetWindow());
-        if(getErrorMessage()==null) setErrorMessage(new ErrorMessage(""));
+        //if(getRegister()==null) setRegister(new Register());
+        //if(getPetWindow()==null) setPetWindow(new PetWindow());
+        //if(getErrorMessage()==null) setErrorMessage(new ErrorMessage(""));
         
         if(getDao()==null) try {
             setDao(new DAO());
@@ -152,6 +162,34 @@ public class RaiseMeUp {
         }
         return true;
     }
+    
+    public static void login(String username, String password) {
+        boolean loggedin=false;
+        Map<Integer,User> users = new HashMap<Integer, User>();
+        try {
+            users = dao.getUser();
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Cannot get user data from database!", ex);
+        }
+        for(Map.Entry<Integer,User> user : users.entrySet()) {
+            if(user.getValue().getUsername().equals(username) && user.getValue().getPassword().equals(password)) {
+                setCurrentUser(user.getValue());
+                loggedin=true;
+                petCreator = new PetCreator();
+                login.setVisible(false);
+                petCreator.setVisible(true);
+                /*petWindow = new PetWindow();
+                login.setVisible(false);
+                petWindow.setVisible(true);*/
+            }
+        }
+        
+        if(!loggedin) {
+            RaiseMeUp.setErrorMessage(new ErrorMessage("Failed to log you in. Please try again."));
+            RaiseMeUp.getErrorMessage().setVisible(true);
+        }
+        
+    }
 
     /**
      * @return the errorMessage
@@ -165,6 +203,20 @@ public class RaiseMeUp {
      */
     public static void setErrorMessage(ErrorMessage aErrorMessage) {
         errorMessage = aErrorMessage;
+    }
+
+    /**
+     * @return the currentUser
+     */
+    public static User getCurrentUser() {
+        return currentUser;
+    }
+
+    /**
+     * @param aCurrentUser the currentUser to set
+     */
+    public static void setCurrentUser(User aCurrentUser) {
+        currentUser = aCurrentUser;
     }
     
     

@@ -3,8 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/SZTETTIK/8.%20szemeszter/OVRT/RaiseMeUp/notsvn/project/RaiseMeUp/src/raisemeup/control/RaiseMeUp.java</file>
-            <file>file:/D:/SZTETTIK/8.%20szemeszter/OVRT/RaiseMeUp/notsvn/project/RaiseMeUp/src/raisemeup/model/DAO.java</file>
+            <file>file:/D:/SZTETTIK/8.%20szemeszter/OVRT/RaiseMeUp/Devetorfina/project/RaiseMeUp/src/raisemeup/view/Register.java</file>
+            <file>file:/D:/SZTETTIK/8.%20szemeszter/OVRT/RaiseMeUp/Devetorfina/project/RaiseMeUp/src/raisemeup/view/Login.java</file>
+            <file>file:/D:/SZTETTIK/8.%20szemeszter/OVRT/RaiseMeUp/Devetorfina/project/RaiseMeUp/src/raisemeup/view/PetWindow.java</file>
+            <file>file:/D:/SZTETTIK/8.%20szemeszter/OVRT/RaiseMeUp/Devetorfina/project/RaiseMeUp/src/raisemeup/control/RaiseMeUp.java</file>
+            <file>file:/D:/SZTETTIK/8.%20szemeszter/OVRT/RaiseMeUp/Devetorfina/project/RaiseMeUp/src/raisemeup/model/DAO.java</file>
+            <file>file:/D:/SZTETTIK/8.%20szemeszter/OVRT/RaiseMeUp/Devetorfina/project/RaiseMeUp/src/raisemeup/view/ErrorMessage.java</file>
+            <file>file:/D:/SZTETTIK/8.%20szemeszter/OVRT/RaiseMeUp/Devetorfina/project/RaiseMeUp/src/raisemeup/view/PetChooser.java</file>
+            <file>file:/D:/SZTETTIK/8.%20szemeszter/OVRT/RaiseMeUp/Devetorfina/project/RaiseMeUp/src/raisemeup/view/PetCreator.java</file>
         </group>
     </open-files>
 </project-private>

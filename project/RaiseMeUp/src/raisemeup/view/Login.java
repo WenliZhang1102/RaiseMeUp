@@ -77,8 +77,10 @@ public class Login extends javax.swing.JFrame {
         jLabel1.setText("Username:");
 
         txtLogin.setFont(new java.awt.Font("Hobo Std", 0, 14)); // NOI18N
+        txtLogin.setText("Andras");
 
         pwfLogin.setFont(new java.awt.Font("Hobo Std", 0, 14)); // NOI18N
+        pwfLogin.setText("macska");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -147,9 +149,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_butLogin2ActionPerformed
 
     private void butLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butLoginActionPerformed
-        RaiseMeUp.setPetWindow(new PetWindow());
-        this.setVisible(false);
-        RaiseMeUp.getPetWindow().setVisible(true);
+        RaiseMeUp.login(txtLogin.getText(), new String(pwfLogin.getPassword()));
     }//GEN-LAST:event_butLoginActionPerformed
 
     /**
