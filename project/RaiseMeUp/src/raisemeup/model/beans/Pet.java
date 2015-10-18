@@ -6,13 +6,16 @@
 package raisemeup.model.beans;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
  * @author Kicsi Andras
  */
 public class Pet {
+    private int petid;
     private int owner;
     private String name;
     private String type;
@@ -23,7 +26,7 @@ public class Pet {
     private int hygiene;
     private int age;
     private String image;
-    private List<Item> owneditems = new ArrayList<Item>();
+    private Map<Item, Integer> owneditems = new HashMap<Item, Integer>();
     private int money;
 
     
@@ -112,19 +115,6 @@ public class Pet {
         this.age = age;
     }
 
-    /**
-     * @return the owneditems
-     */
-    public List<Item> getOwneditems() {
-        return owneditems;
-    }
-
-    /**
-     * @param owneditems the owneditems to set
-     */
-    public void setOwneditems(List<Item> owneditems) {
-        this.owneditems = owneditems;
-    }
 
     /**
      * @return the money
@@ -194,6 +184,34 @@ public class Pet {
      */
     public void setOwner(int owner) {
         this.owner = owner;
+    }
+
+    /**
+     * @return the petid
+     */
+    public int getPetid() {
+        return petid;
+    }
+
+    /**
+     * @param petid the petid to set
+     */
+    public void setPetid(int petid) {
+        this.petid = petid;
+    }
+
+    /**
+     * @return the owneditems
+     */
+    public Map<Item, Integer> getOwneditems() {
+        return owneditems;
+    }
+
+    /**
+     * @param owneditems the owneditems to set
+     */
+    public void setOwneditems(Map<Item, Integer> owneditems) {
+        this.owneditems = owneditems;
     }
     
     

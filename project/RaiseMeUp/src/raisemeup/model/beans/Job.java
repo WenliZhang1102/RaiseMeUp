@@ -19,6 +19,7 @@ public class Job {
     private String image;
     private String client;
     private String message;
+    private int petid;
 
     /**
      * @return the id
@@ -144,6 +145,20 @@ public class Job {
      */
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    /**
+     * @return the petid
+     */
+    public int getPetid() {
+        return petid;
+    }
+
+    /**
+     * @param petid the petid to set
+     */
+    public void setPetid(int petid) {
+        this.petid = petid;
     }
     
     
