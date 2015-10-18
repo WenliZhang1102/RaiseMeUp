@@ -162,6 +162,8 @@
         <Component class="javax.swing.JProgressBar" name="jProgressBar1">
           <Properties>
             <Property name="value" type="int" value="50"/>
+            <Property name="name" type="java.lang.String" value="" noResource="true"/>
+            <Property name="stringPainted" type="boolean" value="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblHunger">
@@ -183,6 +185,7 @@
         <Component class="javax.swing.JProgressBar" name="jProgressBar2">
           <Properties>
             <Property name="value" type="int" value="75"/>
+            <Property name="stringPainted" type="boolean" value="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblHunger2">
@@ -196,6 +199,7 @@
         <Component class="javax.swing.JProgressBar" name="jProgressBar3">
           <Properties>
             <Property name="value" type="int" value="75"/>
+            <Property name="stringPainted" type="boolean" value="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblHunger3">
@@ -209,6 +213,7 @@
         <Component class="javax.swing.JProgressBar" name="jProgressBar4">
           <Properties>
             <Property name="value" type="int" value="40"/>
+            <Property name="stringPainted" type="boolean" value="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblMoney">
@@ -236,18 +241,19 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="lblPetDisplay" min="-2" pref="155" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lblEmotionDislpay" alignment="0" min="-2" pref="183" max="-2" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="lblUpgrade1" min="-2" pref="100" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                          <Component id="lblUpgrade1" min="-2" pref="120" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="lblUpgrade2" min="-2" pref="100" max="-2" attributes="0"/>
+                          <Component id="lblUpgrade2" min="-2" pref="120" max="-2" attributes="0"/>
                       </Group>
+                      <Component id="lblEmotionDislpay" min="-2" pref="183" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -260,8 +266,8 @@
                           <Component id="lblEmotionDislpay" min="-2" pref="205" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="lblUpgrade1" alignment="3" max="32767" attributes="0"/>
-                              <Component id="lblUpgrade2" alignment="3" pref="127" max="32767" attributes="0"/>
+                              <Component id="lblUpgrade1" alignment="3" min="-2" pref="127" max="-2" attributes="0"/>
+                              <Component id="lblUpgrade2" alignment="3" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">

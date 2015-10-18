@@ -5,17 +5,44 @@
  */
 package raisemeup.view;
 
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import raisemeup.control.RaiseMeUp;
+
 /**
  *
  * @author Andras
  */
 public class PetCreator extends javax.swing.JFrame {
 
+    private JButton[] dogs = new JButton[3];
+    private String[] dognames = {"DogBrown","DogYellow","DogWhite"};
+    private JButton[] cats = new JButton[3];
+    private String[] catnames = {"CatWhite","CatYellow","CatGray"};
+    private JButton[] fishes = new JButton[4];
+    private String[] fishnames = {"FishGold","FishSilver","FishPurpleYellow","FishStripes"};
+    private JButton[] penguins = new JButton[2];
+    private String[] penguinnames = {"Penguin","PenguinTie"};
+    
+    private String chosenType, chosenVariant;
+    
     /**
      * Creates new form PetCreator
      */
     public PetCreator() {
         initComponents();
+        myInit();
     }
 
     /**
@@ -27,14 +54,14 @@ public class PetCreator extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblMessage = new javax.swing.JLabel();
-        lblMessage1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        lblCreateYourPet = new javax.swing.JLabel();
+        lblPetName = new javax.swing.JLabel();
+        txtPetName = new javax.swing.JTextField();
         lblPetDisplay = new javax.swing.JLabel();
-        tabAnimals = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
-        scpCats = new javax.swing.JScrollPane();
-        panCats = new javax.swing.JPanel();
+        tabAnimals2 = new javax.swing.JTabbedPane();
+        jPanel6 = new javax.swing.JPanel();
+        scpCats2 = new javax.swing.JScrollPane();
+        panCats2 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         scpDogs = new javax.swing.JScrollPane();
         panDogs = new javax.swing.JPanel();
@@ -44,49 +71,52 @@ public class PetCreator extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         scpPenguins = new javax.swing.JScrollPane();
         panPenguins = new javax.swing.JPanel();
+        butOk = new javax.swing.JButton();
+        butBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Pet Creator");
+        setResizable(false);
 
-        lblMessage.setFont(new java.awt.Font("Hobo Std", 0, 24)); // NOI18N
-        lblMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblMessage.setText("Create your pet:");
+        lblCreateYourPet.setFont(new java.awt.Font("Hobo Std", 0, 24)); // NOI18N
+        lblCreateYourPet.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblCreateYourPet.setText("Create your pet:");
 
-        lblMessage1.setFont(new java.awt.Font("Hobo Std", 0, 14)); // NOI18N
-        lblMessage1.setText("Pet name:");
+        lblPetName.setFont(new java.awt.Font("Hobo Std", 0, 14)); // NOI18N
+        lblPetName.setText("Pet name:");
 
-        jTextField1.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
+        txtPetName.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
 
         lblPetDisplay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        tabAnimals.setTabPlacement(javax.swing.JTabbedPane.LEFT);
-        tabAnimals.setFont(new java.awt.Font("Tekton Pro", 0, 14)); // NOI18N
+        tabAnimals2.setTabPlacement(javax.swing.JTabbedPane.LEFT);
+        tabAnimals2.setFont(new java.awt.Font("Tekton Pro", 0, 14)); // NOI18N
 
-        javax.swing.GroupLayout panCatsLayout = new javax.swing.GroupLayout(panCats);
-        panCats.setLayout(panCatsLayout);
-        panCatsLayout.setHorizontalGroup(
-            panCatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panCats2Layout = new javax.swing.GroupLayout(panCats2);
+        panCats2.setLayout(panCats2Layout);
+        panCats2Layout.setHorizontalGroup(
+            panCats2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 440, Short.MAX_VALUE)
         );
-        panCatsLayout.setVerticalGroup(
-            panCatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 165, Short.MAX_VALUE)
+        panCats2Layout.setVerticalGroup(
+            panCats2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 178, Short.MAX_VALUE)
         );
 
-        scpCats.setViewportView(panCats);
+        scpCats2.setViewportView(panCats2);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scpCats, javax.swing.GroupLayout.Alignment.TRAILING)
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(scpCats2, javax.swing.GroupLayout.Alignment.TRAILING)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scpCats)
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(scpCats2)
         );
 
-        tabAnimals.addTab("Cats", jPanel1);
+        tabAnimals2.addTab("Cats", jPanel6);
 
         javax.swing.GroupLayout panDogsLayout = new javax.swing.GroupLayout(panDogs);
         panDogs.setLayout(panDogsLayout);
@@ -96,7 +126,7 @@ public class PetCreator extends javax.swing.JFrame {
         );
         panDogsLayout.setVerticalGroup(
             panDogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 165, Short.MAX_VALUE)
+            .addGap(0, 178, Short.MAX_VALUE)
         );
 
         scpDogs.setViewportView(panDogs);
@@ -109,10 +139,12 @@ public class PetCreator extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scpDogs)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(scpDogs, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        tabAnimals.addTab("Dogs", jPanel2);
+        tabAnimals2.addTab("Dogs", jPanel2);
 
         javax.swing.GroupLayout panFishesLayout = new javax.swing.GroupLayout(panFishes);
         panFishes.setLayout(panFishesLayout);
@@ -122,7 +154,7 @@ public class PetCreator extends javax.swing.JFrame {
         );
         panFishesLayout.setVerticalGroup(
             panFishesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 165, Short.MAX_VALUE)
+            .addGap(0, 178, Short.MAX_VALUE)
         );
 
         scpFishes.setViewportView(panFishes);
@@ -138,7 +170,7 @@ public class PetCreator extends javax.swing.JFrame {
             .addComponent(scpFishes)
         );
 
-        tabAnimals.addTab("Fishes", jPanel3);
+        tabAnimals2.addTab("Fishes", jPanel3);
 
         javax.swing.GroupLayout panPenguinsLayout = new javax.swing.GroupLayout(panPenguins);
         panPenguins.setLayout(panPenguinsLayout);
@@ -148,7 +180,7 @@ public class PetCreator extends javax.swing.JFrame {
         );
         panPenguinsLayout.setVerticalGroup(
             panPenguinsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 165, Short.MAX_VALUE)
+            .addGap(0, 178, Short.MAX_VALUE)
         );
 
         scpPenguins.setViewportView(panPenguins);
@@ -164,7 +196,25 @@ public class PetCreator extends javax.swing.JFrame {
             .addComponent(scpPenguins)
         );
 
-        tabAnimals.addTab("Penguins", jPanel4);
+        tabAnimals2.addTab("Penguins", jPanel4);
+
+        butOk.setFont(new java.awt.Font("Hobo Std", 0, 14)); // NOI18N
+        butOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/OkButton.png"))); // NOI18N
+        butOk.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        butOk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                butOkActionPerformed(evt);
+            }
+        });
+
+        butBack.setFont(new java.awt.Font("Hobo Std", 0, 14)); // NOI18N
+        butBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BackButton.png"))); // NOI18N
+        butBack.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        butBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                butBackActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -175,37 +225,59 @@ public class PetCreator extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblMessage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblCreateYourPet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblPetDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(177, 177, 177)
-                        .addComponent(lblMessage1)
+                        .addComponent(lblPetName)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtPetName, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(tabAnimals)))
+                        .addComponent(tabAnimals2))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(butBack, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(butOk, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblCreateYourPet, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblPetDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblMessage1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblPetName)
+                    .addComponent(txtPetName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tabAnimals)
+                .addComponent(tabAnimals2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(butOk, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(butBack, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void butOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butOkActionPerformed
+        //System.out.println("You have chosen a " + chosenVariant + " " + chosenType);
+        /*RaiseMeUp.setPetWindow(new PetWindow());
+        this.setVisible(false);
+        RaiseMeUp.getPetWindow().setVisible(true);*/
+    }//GEN-LAST:event_butOkActionPerformed
+
+    private void butBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butBackActionPerformed
+        RaiseMeUp.setLogin(new Login());
+        this.setVisible(false);
+        RaiseMeUp.getLogin().setVisible(true);
+    }//GEN-LAST:event_butBackActionPerformed
 
     /**
      * @param args the command line arguments
@@ -241,24 +313,218 @@ public class PetCreator extends javax.swing.JFrame {
             }
         });
     }
+    
+    private void myInit() {
+        
+        
+        BufferedImage image=null;
+        
+        //DogPictures
+        for(int i=0; i<3; i++) {
+            try {
+                image = ImageIO.read(getClass().getResource("/images/" +dognames[i] + ".png"));
+            } catch (IOException ex) {
+                Logger.getLogger(PetWindow.class.getName()).log(Level.SEVERE, "Cannot load Dogs!", ex);
+            }
+            image = RaiseMeUp.resizeImage(image, image.getType(), 150);
+            dogs[i]=new JButton(new ImageIcon(image));
+            dogs[i].setCursor(new Cursor(Cursor.HAND_CURSOR));
+            panDogs.setLayout(new GridLayout());
+            panDogs.add(dogs[i]);
+            dogs[i].setLocation(i*160, 300);
+            //Listener
+            dogs[i].addActionListener(new ActionListener() {
+                
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    for(int j=0; j<3; j++)
+                        if(e.getSource() == dogs[j]){
+                            dogAction(j);                              
+                        }
+                }
+            });
+        }
+        panDogs.repaint();
+        panDogs.revalidate();
+        
+        //CatPictures
+        for(int i=0; i<3; i++) {
+            try {
+                image = ImageIO.read(getClass().getResource("/images/" +catnames[i] + ".png"));
+            } catch (IOException ex) {
+                Logger.getLogger(PetWindow.class.getName()).log(Level.SEVERE, "Cannot load Cats!", ex);
+            }
+            image = RaiseMeUp.resizeImage(image, image.getType(), 150);
+            cats[i]=new JButton(new ImageIcon(image));
+            cats[i].setCursor(new Cursor(Cursor.HAND_CURSOR));
+            panCats2.setLayout(new GridLayout());
+            panCats2.add(cats[i]);
+            cats[i].setLocation(i*160, 300);
+            //Listener
+            cats[i].addActionListener(new ActionListener() {
+                
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    for(int j=0; j<3; j++)
+                        if(e.getSource() == cats[j]){
+                            catAction(j);                              
+                        }
+                }
+            });
+        }
+        panCats2.repaint();
+        panCats2.revalidate();
+        
+        //FishPictures
+        for(int i=0; i<4; i++) {
+            try {
+                image = ImageIO.read(getClass().getResource("/images/" +fishnames[i] + ".png"));
+            } catch (IOException ex) {
+                Logger.getLogger(PetWindow.class.getName()).log(Level.SEVERE, "Cannot load Fishes!", ex);
+            }
+            image = RaiseMeUp.resizeImage(image, image.getType(), 150);
+            fishes[i]=new JButton(new ImageIcon(image));
+            fishes[i].setCursor(new Cursor(Cursor.HAND_CURSOR));
+            panFishes.setLayout(new GridLayout());
+            panFishes.add(fishes[i]);
+            fishes[i].setLocation(i*160, 300);
+            //Listener
+            fishes[i].addActionListener(new ActionListener() {
+                
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    for(int j=0; j<4; j++)
+                        if(e.getSource() == fishes[j]){
+                            fishAction(j);                              
+                        }
+                }
+            });
+        }
+        panFishes.repaint();
+        panFishes.revalidate();
+        
+        //FishPictures
+        for(int i=0; i<2; i++) {
+            try {
+                image = ImageIO.read(getClass().getResource("/images/" +penguinnames[i] + ".png"));
+            } catch (IOException ex) {
+                Logger.getLogger(PetWindow.class.getName()).log(Level.SEVERE, "Cannot load Penguins!", ex);
+            }
+            image = RaiseMeUp.resizeImage(image, image.getType(), 150);
+            penguins[i]=new JButton(new ImageIcon(image));
+            penguins[i].setCursor(new Cursor(Cursor.HAND_CURSOR));
+            panPenguins.setLayout(new GridLayout());
+            panPenguins.add(penguins[i]);
+            penguins[i].setLocation(i*160, 300);
+            //Listener
+            penguins[i].addActionListener(new ActionListener() {
+                
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    for(int j=0; j<2; j++)
+                        if(e.getSource() == penguins[j]){
+                            penguinAction(j);                              
+                        }
+                }
+            });
+        }
+        panPenguins.repaint();
+        panPenguins.revalidate();
+        
+        
+    }
+    
+    public void dogAction(int which) {
+        BufferedImage image=null;
+        try {
+            image = ImageIO.read(getClass().getResource("/images/" +dognames[which] + ".png"));
+        } catch (IOException ex) {
+            Logger.getLogger(PetCreator.class.getName()).log(Level.SEVERE, "Cannot load Dogs!", ex);
+        }
+        lblPetDisplay.setIcon(new ImageIcon(RaiseMeUp.resizeImage(image, image.getType(), 200)));
+        
+        //Determining chosen type and variant
+        chosenType="dog";
+        if(which==0) chosenVariant="brown";
+        else if(which==1) chosenVariant="yellow";
+        else chosenVariant="white";
+    }
+    
+    public void catAction(int which) {
+        BufferedImage image=null;
+        try {
+            image = ImageIO.read(getClass().getResource("/images/" +catnames[which] + ".png"));
+        } catch (IOException ex) {
+            Logger.getLogger(PetCreator.class.getName()).log(Level.SEVERE, "Cannot load Cats!", ex);
+        }
+        lblPetDisplay.setIcon(new ImageIcon(RaiseMeUp.resizeImage(image, image.getType(), 200)));
+        
+        //Determining chosen type and variant
+        chosenType="cat";
+        if(which==0) chosenVariant="white";
+        else if(which==1) chosenVariant="yellow";
+        else chosenVariant="gray";
+    }
+    
+    public void fishAction(int which) {
+        BufferedImage image=null;
+        try {
+            image = ImageIO.read(getClass().getResource("/images/" +fishnames[which] + ".png"));
+        } catch (IOException ex) {
+            Logger.getLogger(PetCreator.class.getName()).log(Level.SEVERE, "Cannot load Fishes!", ex);
+        }
+        lblPetDisplay.setIcon(new ImageIcon(RaiseMeUp.resizeImage(image, image.getType(), 200)));
+        
+        //Determining chosen type and variant
+        chosenType="fish";
+        if(which==0) chosenVariant="gold";
+        else if(which==1) chosenVariant="silver";
+        else if(which==2) chosenVariant="purleyellow";
+        else chosenVariant="stripes";
+    }
 
+    public void penguinAction(int which) {
+        BufferedImage image=null;
+        try {
+            image = ImageIO.read(getClass().getResource("/images/" +penguinnames[which] + ".png"));
+        } catch (IOException ex) {
+            Logger.getLogger(PetCreator.class.getName()).log(Level.SEVERE, "Cannot load Penguins!", ex);
+        }
+        lblPetDisplay.setIcon(new ImageIcon(RaiseMeUp.resizeImage(image, image.getType(), 200)));
+        
+        //Determining chosen type and variant
+        chosenType="penguin";
+        if(which==0) chosenVariant="vanilla";
+        else chosenVariant="tie";
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton butBack;
+    private javax.swing.JButton butOk;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JLabel lblMessage;
-    private javax.swing.JLabel lblMessage1;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JLabel lblCreateYourPet;
     private javax.swing.JLabel lblPetDisplay;
+    private javax.swing.JLabel lblPetName;
     private javax.swing.JPanel panCats;
+    private javax.swing.JPanel panCats1;
+    private javax.swing.JPanel panCats2;
     private javax.swing.JPanel panDogs;
     private javax.swing.JPanel panFishes;
     private javax.swing.JPanel panPenguins;
     private javax.swing.JScrollPane scpCats;
+    private javax.swing.JScrollPane scpCats1;
+    private javax.swing.JScrollPane scpCats2;
     private javax.swing.JScrollPane scpDogs;
     private javax.swing.JScrollPane scpFishes;
     private javax.swing.JScrollPane scpPenguins;
     private javax.swing.JTabbedPane tabAnimals;
+    private javax.swing.JTabbedPane tabAnimals1;
+    private javax.swing.JTabbedPane tabAnimals2;
+    private javax.swing.JTextField txtPetName;
     // End of variables declaration//GEN-END:variables
 }

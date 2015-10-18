@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import raisemeup.model.DAO;
 import raisemeup.model.beans.Pet;
+import raisemeup.model.beans.PetBuilder;
 import raisemeup.model.beans.User;
 import raisemeup.model.beans.UserBuilder;
 import raisemeup.view.ErrorMessage;
@@ -189,6 +190,12 @@ public class RaiseMeUp {
             RaiseMeUp.getErrorMessage().setVisible(true);
         }
         
+    }
+    
+    public static void bookMyNewAnimal(String animalname, String type, String variant, String imagestring) {
+        PetBuilder pb = new PetBuilder().setName(animalname).setType(type).setVariant(variant).setOwner(currentUser.getId()).setImage(imagestring);
+        Pet newPet = pb.createPet();
+        dao.addPet(newPet);
     }
 
     /**
