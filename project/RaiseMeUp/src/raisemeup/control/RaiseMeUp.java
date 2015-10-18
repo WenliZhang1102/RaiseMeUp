@@ -195,7 +195,11 @@ public class RaiseMeUp {
     public static void bookMyNewAnimal(String animalname, String type, String variant, String imagestring) {
         PetBuilder pb = new PetBuilder().setName(animalname).setType(type).setVariant(variant).setOwner(currentUser.getId()).setImage(imagestring);
         Pet newPet = pb.createPet();
-        dao.addPet(newPet);
+        try {
+            dao.addPet(newPet);
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Cannot add pet to the database!", ex);
+        }
     }
 
     /**

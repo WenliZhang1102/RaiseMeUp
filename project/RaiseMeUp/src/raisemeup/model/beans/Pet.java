@@ -29,6 +29,27 @@ public class Pet {
     private Map<Item, Integer> owneditems = new HashMap<Item, Integer>();
     private int money;
 
+    public Pet(int owner, String name, String type, String variant, String image) {
+        this.owner = owner;
+        this.name = name;
+        this.type = type;
+        this.variant = variant;
+        this.image = image;
+        
+        petid=0;
+        hunger = 100;
+        energy = 100;
+        fun = 100;
+        hygiene = 100;
+        money=100;
+        age=0;
+    }
+    
+    public Pet() {
+        
+    }
+
+    
     
 
     /**
