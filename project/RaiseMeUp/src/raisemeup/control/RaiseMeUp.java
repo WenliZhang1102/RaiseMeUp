@@ -13,6 +13,9 @@ import raisemeup.model.beans.Pet;
 import raisemeup.model.beans.PetBuilder;
 import raisemeup.model.beans.User;
 import raisemeup.model.beans.UserBuilder;
+import raisemeup.view.AdminPets;
+import raisemeup.view.AdminUsers;
+import raisemeup.view.AdminWindow;
 import raisemeup.view.ErrorMessage;
 import raisemeup.view.Login;
 import raisemeup.view.PetChooser;
@@ -33,6 +36,9 @@ public class RaiseMeUp {
     private static ErrorMessage errorMessage;
     private static PetChooser petChooser;
     private static PetCreator petCreator;
+    private static AdminUsers adminUsers;
+    private static AdminWindow adminWindow;
+    private static AdminPets adminPets;
     
     
     private static User currentUser;
@@ -154,6 +160,14 @@ public class RaiseMeUp {
         return true;
     }
     
+    public static Map<Integer, User> listUsers(){
+        Map<Integer,User> users = new HashMap<Integer, User>();
+        users = dao.giveMeTheUsers();
+        
+        return users;
+    }
+    
+    
     public static boolean doesUserExist(String username) {
         UserBuilder ub = new UserBuilder().setUsername(username);
         try {
@@ -167,11 +181,20 @@ public class RaiseMeUp {
     public static void login(String username, String password) {
         boolean loggedin=false;
         Map<Integer,User> users = new HashMap<Integer, User>();
+        
+        if ("admin".equals(username) && "admin".equals(password)){
+            adminWindow = new AdminWindow();
+            login.setVisible(false);
+            adminWindow.setVisible(true);
+            loggedin = true;
+        } else {
+        
         try {
             users = dao.getUser();
         } catch (SQLException ex) {
             Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Cannot get user data from database!", ex);
         }
+        
         for(Map.Entry<Integer,User> user : users.entrySet()) {
             if(user.getValue().getUsername().equals(username) && user.getValue().getPassword().equals(password)) {
                 setCurrentUser(user.getValue());
@@ -184,7 +207,7 @@ public class RaiseMeUp {
                 petWindow.setVisible(true);*/
             }
         }
-        
+        }
         if(!loggedin) {
             RaiseMeUp.setErrorMessage(new ErrorMessage("Failed to log you in. Please try again."));
             RaiseMeUp.getErrorMessage().setVisible(true);
@@ -228,6 +251,48 @@ public class RaiseMeUp {
      */
     public static void setCurrentUser(User aCurrentUser) {
         currentUser = aCurrentUser;
+    }
+
+    /**
+     * @return the adminWindow
+     */
+    public static AdminWindow getAdminWindow() {
+        return adminWindow;
+    }
+
+    /**
+     * @param aAdminWindow the adminWindow to set
+     */
+    public static void setAdminWindow(AdminWindow aAdminWindow) {
+        adminWindow = aAdminWindow;
+    }
+
+    /**
+     * @return the adminUsers
+     */
+    public static AdminUsers getAdminUsers() {
+        return adminUsers;
+    }
+
+    /**
+     * @param aAdminUsers the adminUsers to set
+     */
+    public static void setAdminUsers(AdminUsers aAdminUsers) {
+        adminUsers = aAdminUsers;
+    }
+
+    /**
+     * @return the adminPets
+     */
+    public static AdminPets getAdminPets() {
+        return adminPets;
+    }
+
+    /**
+     * @param aAdminPets the adminPets to set
+     */
+    public static void setAdminPets(AdminPets aAdminPets) {
+        adminPets = aAdminPets;
     }
     
     

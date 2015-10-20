@@ -164,9 +164,9 @@ public class PetWindow extends javax.swing.JFrame {
 
         lblPetDisplay.setText("jLabel1");
 
-        lblUpgrade1.setText("jLabel1");
+        lblUpgrade1.setText("Upgrade no.1");
 
-        lblUpgrade2.setText("jLabel1");
+        lblUpgrade2.setText("Upgrade no.2");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);

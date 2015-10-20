@@ -40,6 +40,7 @@ public class DAO {
     private static final String SQL_queryUser = "select * from User where username = ?";
     private static final String SQL_delUser = "delete from User where username = ?";
     private static final String SQL_listUsers = "select * from User";
+    private static final String SQL_updateUser = "UPDATE User SET email = ?, username = ?, password = ? where userid = ?";
     
     
     private static final String SQL_addPet = 
@@ -50,6 +51,8 @@ public class DAO {
     private static final String SQL_queryPet = "select * from Pet where name = ? and userid = ?";
     private static final String SQL_delPet = "delete from Pet where userid = ? and name = ?";
     private static final String SQL_listPets = "select * from Pet";
+    private static final String SQL_updatePet = 
+                "UPDATE Pet SET type = ?, variant = ?, name = ?, hunger = ?, energy = ?, fun = ?, hygiene = ?, age = ?, money = ?, image = ?, userid = ? WHERE petid = ?";
 
     
     
@@ -82,6 +85,11 @@ public class DAO {
     public DAO() throws ClassNotFoundException{
 		Class.forName("org.sqlite.JDBC");
 	}
+    
+    
+    public Map<Integer, User> giveMeTheUsers(){
+        return users;
+    }
     
     public boolean addUser(User u) throws SQLException{
 		
@@ -234,7 +242,41 @@ public class DAO {
 		return true;
 	}
 
-
+    public boolean updateUser(User u) throws SQLException{
+		
+                System.out.println("jdbc:sqlite:"+dbfile);
+		
+		Connection conn = null;
+		PreparedStatement pst = null;
+		try {
+                        
+			conn = DriverManager.getConnection("jdbc:sqlite:"+dbfile);
+			pst = conn.prepareStatement(SQL_updateUser);
+			int index = 1;
+			pst.setString(index++, u.getEmail());
+                        pst.setString(index++, u.getUsername());
+			pst.setString(index++, u.getPassword());
+			pst.setInt(index++, u.getId());
+                        
+			pst.executeUpdate();
+		} finally {
+			try {
+				if(pst != null)
+					pst.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				if(conn != null)
+					conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
+	}
+    
+    
     public boolean addPet(Pet p) throws SQLException{
 		
                 System.out.println("jdbc:sqlite:"+dbfile);

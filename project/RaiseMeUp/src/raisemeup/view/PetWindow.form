@@ -293,12 +293,12 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lblUpgrade1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel1"/>
+            <Property name="text" type="java.lang.String" value="Upgrade no.1"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblUpgrade2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel1"/>
+            <Property name="text" type="java.lang.String" value="Upgrade no.2"/>
           </Properties>
         </Component>
       </SubComponents>

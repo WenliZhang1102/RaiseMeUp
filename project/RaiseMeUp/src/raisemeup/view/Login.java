@@ -77,10 +77,13 @@ public class Login extends javax.swing.JFrame {
         jLabel1.setText("Username:");
 
         txtLogin.setFont(new java.awt.Font("Hobo Std", 0, 14)); // NOI18N
-        txtLogin.setText("Andras");
 
         pwfLogin.setFont(new java.awt.Font("Hobo Std", 0, 14)); // NOI18N
-        pwfLogin.setText("macska");
+        pwfLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pwfLoginActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -152,6 +155,10 @@ public class Login extends javax.swing.JFrame {
     private void butLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butLoginActionPerformed
         RaiseMeUp.login(txtLogin.getText(), new String(pwfLogin.getPassword()));
     }//GEN-LAST:event_butLoginActionPerformed
+
+    private void pwfLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pwfLoginActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pwfLoginActionPerformed
 
     /**
      * @param args the command line arguments

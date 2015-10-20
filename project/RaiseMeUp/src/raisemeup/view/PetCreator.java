@@ -267,10 +267,10 @@ public class PetCreator extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void butOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butOkActionPerformed
-        //System.out.println("You have chosen a " + chosenVariant + " " + chosenType);
-        /*RaiseMeUp.setPetWindow(new PetWindow());
+        System.out.println("You have chosen a " + chosenVariant + " " + chosenType);
+        RaiseMeUp.setPetWindow(new PetWindow());
         this.setVisible(false);
-        RaiseMeUp.getPetWindow().setVisible(true);*/
+        RaiseMeUp.getPetWindow().setVisible(true);
     }//GEN-LAST:event_butOkActionPerformed
 
     private void butBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butBackActionPerformed
