@@ -182,6 +182,12 @@ public class RaiseMeUp {
         boolean loggedin=false;
         Map<Integer,User> users = new HashMap<Integer, User>();
         
+        try {
+                users = dao.getUser();
+            } catch (SQLException ex) {
+                Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Cannot get user data from database!", ex);
+            }
+        
         if ("admin".equals(username) && "admin".equals(password)){
             adminWindow = new AdminWindow();
             login.setVisible(false);
@@ -189,24 +195,18 @@ public class RaiseMeUp {
             loggedin = true;
         } else {
         
-        try {
-            users = dao.getUser();
-        } catch (SQLException ex) {
-            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Cannot get user data from database!", ex);
-        }
-        
-        for(Map.Entry<Integer,User> user : users.entrySet()) {
-            if(user.getValue().getUsername().equals(username) && user.getValue().getPassword().equals(password)) {
-                setCurrentUser(user.getValue());
-                loggedin=true;
-                petCreator = new PetCreator();
-                login.setVisible(false);
-                petCreator.setVisible(true);
-                /*petWindow = new PetWindow();
-                login.setVisible(false);
-                petWindow.setVisible(true);*/
+            for(Map.Entry<Integer,User> user : users.entrySet()) {
+                if(user.getValue().getUsername().equals(username) && user.getValue().getPassword().equals(password)) {
+                    setCurrentUser(user.getValue());
+                    loggedin=true;
+                    petCreator = new PetCreator();
+                    login.setVisible(false);
+                    petCreator.setVisible(true);
+                    /*petWindow = new PetWindow();
+                    login.setVisible(false);
+                    petWindow.setVisible(true);*/
+                }
             }
-        }
         }
         if(!loggedin) {
             RaiseMeUp.setErrorMessage(new ErrorMessage("Failed to log you in. Please try again."));
