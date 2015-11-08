@@ -27,6 +27,8 @@ public class Pet {
     private int age;
     private String image;
     private Map<Item, Integer> owneditems = new HashMap<Item, Integer>();
+    private Map<Job, Integer> ownedjobs = new HashMap<Job, Integer>();
+    
     private int money;
 
     public Pet(int owner, String name, String type, String variant, String image) {
@@ -234,6 +236,22 @@ public class Pet {
     public void setOwneditems(Map<Item, Integer> owneditems) {
         this.owneditems = owneditems;
     }
+
+    /**
+     * @return the ownedjobs
+     */
+    public Map<Job, Integer> getOwnedjobs() {
+        return ownedjobs;
+    }
+
+    /**
+     * @param ownedjobs the ownedjobs to set
+     */
+    public void setOwnedjobs(Map<Job, Integer> ownedjobs) {
+        this.ownedjobs = ownedjobs;
+    }
+
+  
     
     
 }

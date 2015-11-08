@@ -5,10 +5,17 @@
  */
 package raisemeup.view;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 import raisemeup.control.RaiseMeUp;
+import raisemeup.model.beans.Food;
+import raisemeup.model.beans.Item;
+import raisemeup.model.beans.Pet;
+import raisemeup.model.beans.PetBuilder;
+import raisemeup.model.beans.Upgrade;
 import raisemeup.model.beans.User;
 
 /**
@@ -17,11 +24,14 @@ import raisemeup.model.beans.User;
  */
 public class AdminPets extends javax.swing.JFrame {
 
+    
+    private Map<Integer,Pet> pets = new HashMap<Integer, Pet>();
     /**
      * Creates new form AdminPets
      */
     public AdminPets() {
         initComponents();
+        myInit();
     }
 
     /**
@@ -33,131 +43,157 @@ public class AdminPets extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
+        texType = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        texName = new javax.swing.JTextField();
+        texVariant = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        butUpdate = new javax.swing.JButton();
+        butRemovePet = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tableUsers = new javax.swing.JTable();
-        jTextField4 = new javax.swing.JTextField();
+        tablePets = new javax.swing.JTable();
+        texHunger = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
+        texFun = new javax.swing.JTextField();
+        texEnergy = new javax.swing.JTextField();
+        texHygiene = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        texMoney = new javax.swing.JTextField();
+        texAge = new javax.swing.JTextField();
+        butListPetsItem = new javax.swing.JButton();
         butBack = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        texOwner = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        texImage = new javax.swing.JTextField();
+        butListPetsJobs = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTextField1.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
+        texType.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
+        texType.setEnabled(false);
 
-        jLabel3.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
         jLabel3.setText("Name");
 
-        jLabel2.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
         jLabel2.setText("Variant");
 
-        jTextField2.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
+        texName.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
+        texName.setEnabled(false);
 
-        jTextField3.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
+        texVariant.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
+        texVariant.setEnabled(false);
 
-        jLabel1.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
         jLabel1.setText("Type");
 
-        jButton2.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
-        jButton2.setText("Add");
-
-        jButton3.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
-        jButton3.setText("Update");
-
-        jButton1.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
-        jButton1.setText("List Pets");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        butUpdate.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
+        butUpdate.setText("Update");
+        butUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                butUpdateActionPerformed(evt);
             }
         });
 
-        jButton4.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
-        jButton4.setText("Remove");
+        butRemovePet.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
+        butRemovePet.setText("Remove");
+        butRemovePet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                butRemovePetActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Hobo Std", 0, 24)); // NOI18N
         jLabel4.setText("Pet settings");
 
-        tableUsers.setModel(new javax.swing.table.DefaultTableModel(
+        tablePets.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "type", "variant", "name", "hunger", "energy", "fun", "hygiene", "age", "money"
+                "type", "variant", "name", "hunger", "energy", "fun", "hygiene", "age", "money", "image", "owner"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tableUsers);
+        jScrollPane1.setViewportView(tablePets);
 
-        jTextField4.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
+        texHunger.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
 
-        jLabel5.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
         jLabel5.setText("Energy");
 
-        jLabel6.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
         jLabel6.setText("Fun");
 
-        jLabel7.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
         jLabel7.setText("Hunger");
 
-        jTextField5.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
+        texFun.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
 
-        jTextField6.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
+        texEnergy.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
 
-        jTextField7.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
+        texHygiene.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
 
-        jLabel8.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
         jLabel8.setText("Age");
 
-        jLabel9.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
         jLabel9.setText("Money");
 
-        jLabel10.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
         jLabel10.setText("Hygiene");
 
-        jTextField8.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
+        texMoney.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
 
-        jTextField9.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
+        texAge.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
+        texAge.setEnabled(false);
 
-        jButton5.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
-        jButton5.setText("List Pet's items");
+        butListPetsItem.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
+        butListPetsItem.setText("List Pet's items");
+        butListPetsItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                butListPetsItemActionPerformed(evt);
+            }
+        });
 
-        jButton6.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
-        jButton6.setText("List Pet's owner");
-
-        butBack.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
+        butBack.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
         butBack.setText("Back");
         butBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 butBackActionPerformed(evt);
+            }
+        });
+
+        jLabel11.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
+        jLabel11.setText("Owner");
+
+        texOwner.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
+        texOwner.setEnabled(false);
+
+        jLabel12.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
+        jLabel12.setText("Image");
+
+        texImage.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
+
+        butListPetsJobs.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
+        butListPetsJobs.setText("List Pet's jobs");
+        butListPetsJobs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                butListPetsJobsActionPerformed(evt);
             }
         });
 
@@ -171,16 +207,6 @@ public class AdminPets extends javax.swing.JFrame {
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel10))
-                                .addGap(20, 20, 20)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jTextField9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
-                                    .addComponent(jTextField7)
-                                    .addComponent(jTextField8)))
                             .addComponent(jLabel4)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,42 +215,50 @@ public class AdminPets extends javax.swing.JFrame {
                                     .addComponent(jLabel7))
                                 .addGap(24, 24, 24)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
-                                    .addComponent(jTextField5)
-                                    .addComponent(jTextField4)))
+                                    .addComponent(texEnergy, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
+                                    .addComponent(texFun)
+                                    .addComponent(texHunger)))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                                        .addComponent(jButton5))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel2)
-                                            .addComponent(jLabel3)
-                                            .addComponent(jLabel1))
-                                        .addGap(20, 20, 20)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(0, 36, Short.MAX_VALUE))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                .addGap(5, 5, 5)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addComponent(jTextField2))))))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(33, 33, 33)
-                                        .addComponent(jButton6))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(65, 65, 65)
-                                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(74, 74, 74)
-                                        .addComponent(butBack, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel1))
+                                .addGap(25, 25, 25)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(texType, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+                                    .addComponent(texVariant, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(texName))
+                                .addGap(50, 50, 50)
+                                .addComponent(butUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(65, 65, 65)
+                                .addComponent(butRemovePet, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(74, 74, 74)
+                                .addComponent(butBack, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(butListPetsItem)
+                                .addGap(42, 42, 42)
+                                .addComponent(butListPetsJobs))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(jLabel12)
+                                    .addGap(29, 29, 29)
+                                    .addComponent(texImage, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel8)
+                                                .addComponent(jLabel9)
+                                                .addComponent(jLabel10))
+                                            .addGap(20, 20, 20))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel11)
+                                            .addGap(19, 19, 19)))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(texOwner)
+                                        .addComponent(texAge, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
+                                        .addComponent(texHygiene)
+                                        .addComponent(texMoney)))))
                         .addGap(0, 131, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -237,50 +271,56 @@ public class AdminPets extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton5)
-                    .addComponent(jButton6))
+                    .addComponent(butListPetsItem)
+                    .addComponent(butListPetsJobs))
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(texType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(texVariant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(texName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(texHunger, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(texEnergy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(texFun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(texHygiene, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(texAge, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                    .addComponent(texMoney, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
+                    .addComponent(jLabel12)
+                    .addComponent(texImage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(texOwner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(butUpdate)
+                    .addComponent(butRemovePet)
                     .addComponent(butBack))
                 .addContainerGap())
         );
@@ -288,30 +328,150 @@ public class AdminPets extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Map<Integer,User> users = new HashMap<Integer, User>();
+    private void myInit(){
+        
+        listPets();
+        
+        
+        tablePets.addMouseListener(new MouseAdapter(){
+            
+            public void mouseClicked(MouseEvent e){
+                DefaultTableModel model = (DefaultTableModel) tablePets.getModel();
+                int i = tablePets.getSelectedRow();
 
-        users = RaiseMeUp.listUsers();
-
-        DefaultTableModel model = new DefaultTableModel();
-        tableUsers.setModel(model);
-
-        Object[] row = new Object[3];
-        for (Map.Entry<Integer, User> i : users.entrySet()){
-            row[0] = i.getValue().getUsername();
-            row[1] = i.getValue().getPassword();
-            row[2] = i.getValue().getEmail();
-            System.out.println(i.getValue().getUsername());
-            model.addRow(row);
+                
+                texType.setText(model.getValueAt(i, 0).toString());
+                texVariant.setText(model.getValueAt(i, 1).toString());
+                texName.setText(model.getValueAt(i, 2).toString());
+                texHunger.setText(model.getValueAt(i, 3).toString());
+                texEnergy.setText(model.getValueAt(i, 4).toString());
+                texFun.setText(model.getValueAt(i, 5).toString());
+                texHygiene.setText(model.getValueAt(i, 6).toString());
+                texAge.setText(model.getValueAt(i, 7).toString());
+                texMoney.setText(model.getValueAt(i, 8).toString());
+                texImage.setText(model.getValueAt(i, 9).toString());
+                texOwner.setText(model.getValueAt(i, 10).toString());
+        
+            }
+        });
+    }
+    
+    private void listPets(){
+        pets = RaiseMeUp.listPets();        
+        DefaultTableModel model = (DefaultTableModel) tablePets.getModel();
+        model.setRowCount(0);
+        
+        for (Map.Entry<Integer, Pet> i : pets.entrySet()){
+            System.out.println(i.getValue().getName());
+            model.addRow(new Object[]{i.getValue().getType(), i.getValue().getVariant(), i.getValue().getName(),
+                i.getValue().getHunger(),i.getValue().getEnergy(),i.getValue().getFun(),i.getValue().getHygiene(),
+                i.getValue().getAge(), i.getValue().getMoney(), i.getValue().getImage(), i.getValue().getOwner()});
+            /*
+            for (Map.Entry<Item, Integer> item : i.getValue().getOwneditems().entrySet()){
+                if (item.getKey() instanceof Food){
+                    System.out.println(((Food)item.getKey()).getName());
+                } else {
+                    System.out.println(((Upgrade)item.getKey()).getName());
+                }
+                
+            }*/
         }
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-
+    }
+    
+    private void clearTextFields(){
+        texType.setText("");
+        texVariant.setText("");
+        texName.setText("");
+        texHunger.setText("");
+        texEnergy.setText("");
+        texFun.setText("");
+        texHygiene.setText("");
+        texAge.setText("");
+        texMoney.setText("");
+        texImage.setText("");
+        texOwner.setText("");
+    }
+    
     private void butBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butBackActionPerformed
         RaiseMeUp.setAdminWindow(new AdminWindow());
         this.setVisible(false);
         RaiseMeUp.getAdminWindow().setVisible(true);
     }//GEN-LAST:event_butBackActionPerformed
+
+    private void butRemovePetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butRemovePetActionPerformed
+        DefaultTableModel model = (DefaultTableModel) tablePets.getModel();
+        int i = tablePets.getSelectedRow();
+        
+        if (i >= 0){
+            PetBuilder ub = new PetBuilder().setName(model.getValueAt(i, 2).toString()).setOwner(Integer.parseInt(model.getValueAt(i, 9).toString()));
+            RaiseMeUp.removePet(ub.createPet());
+            model.removeRow(i);
+        }
+        
+        clearTextFields();
+        System.out.println("i = " + i);
+    }//GEN-LAST:event_butRemovePetActionPerformed
+
+    private void butListPetsItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butListPetsItemActionPerformed
+
+        for (Map.Entry<Integer, Pet> pet : pets.entrySet()){
+            System.out.println(pet.getValue().getName() + "  ÉS  " + texName.getText());
+            System.out.println(pet.getValue().getOwner()+ "  ÉS  " + texOwner.getText());
+            if (pet.getValue().getName().toString().equals(texName.getText().toString()) && pet.getValue().getOwner() == Integer.parseInt(texOwner.getText())){
+                //new AdminPetsItems(pet.getValue());
+                System.out.println("YES");
+                RaiseMeUp.setAdminPetsItems(new AdminPetsItems(pet.getValue()));
+                this.setVisible(false);
+                RaiseMeUp.getAdminPetsItems().setVisible(true);
+                break;
+            }
+        }
+        
+    }//GEN-LAST:event_butListPetsItemActionPerformed
+
+    private void butUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butUpdateActionPerformed
+        DefaultTableModel model = (DefaultTableModel) tablePets.getModel();
+        int i = tablePets.getSelectedRow();
+        Pet p = new Pet();
+        
+        //UPDATE Pet SET type = ?, variant = ?, hunger = ?, energy = ?, fun = ?, hygiene = ?, age = ?, money = ?, image = ? WHERE name = ? AND userid = ?";
+        if (i >= 0){
+            PetBuilder pb = new PetBuilder();
+            p = pb.createPet();
+            p.setName(texName.getText());
+            p.setHunger(Integer.parseInt(texHunger.getText()));
+            p.setEnergy(Integer.parseInt(texEnergy.getText()));
+            p.setFun(Integer.parseInt(texFun.getText()));
+            p.setHygiene(Integer.parseInt(texHygiene.getText()));
+            p.setMoney(Integer.parseInt(texMoney.getText()));
+            p.setImage(texImage.getText());
+            p.setOwner(Integer.parseInt(texOwner.getText()));
+            RaiseMeUp.updatePet(p);
+            
+            model.setValueAt(texHunger.getText(), i, 3);
+            model.setValueAt(texEnergy.getText(), i, 4);
+            model.setValueAt(texFun.getText(), i, 5);
+            model.setValueAt(texHygiene.getText(), i, 6);
+            model.setValueAt(texMoney.getText(), i, 8);
+            model.setValueAt(texImage.getText(), i, 9);
+        }
+        clearTextFields();
+    }//GEN-LAST:event_butUpdateActionPerformed
+
+    private void butListPetsJobsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butListPetsJobsActionPerformed
+        for (Map.Entry<Integer, Pet> pet : pets.entrySet()){
+            //System.out.println(pet.getValue().getName() + "  ÉS  " + texName.getText());
+            //System.out.println(pet.getValue().getOwner()+ "  ÉS  " + texOwner.getText());
+            if (pet.getValue().getName().toString().equals(texName.getText().toString()) && pet.getValue().getOwner() == Integer.parseInt(texOwner.getText())){
+                //new AdminPetsItems(pet.getValue());
+                //System.out.println("YES");
+                RaiseMeUp.setAdminPetsJobs(new AdminPetsJobs(pet.getValue()));
+                this.setVisible(false);
+                RaiseMeUp.getAdminPetsJobs().setVisible(true);
+                break;
+            }
+        }
+    }//GEN-LAST:event_butListPetsJobsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -350,14 +510,14 @@ public class AdminPets extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton butBack;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
+    private javax.swing.JButton butListPetsItem;
+    private javax.swing.JButton butListPetsJobs;
+    private javax.swing.JButton butRemovePet;
+    private javax.swing.JButton butUpdate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -367,15 +527,17 @@ public class AdminPets extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
-    private javax.swing.JTable tableUsers;
+    private javax.swing.JTable tablePets;
+    private javax.swing.JTextField texAge;
+    private javax.swing.JTextField texEnergy;
+    private javax.swing.JTextField texFun;
+    private javax.swing.JTextField texHunger;
+    private javax.swing.JTextField texHygiene;
+    private javax.swing.JTextField texImage;
+    private javax.swing.JTextField texMoney;
+    private javax.swing.JTextField texName;
+    private javax.swing.JTextField texOwner;
+    private javax.swing.JTextField texType;
+    private javax.swing.JTextField texVariant;
     // End of variables declaration//GEN-END:variables
 }

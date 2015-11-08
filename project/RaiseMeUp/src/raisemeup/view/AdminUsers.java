@@ -5,12 +5,15 @@
  */
 package raisemeup.view;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 import raisemeup.control.RaiseMeUp;
 import raisemeup.model.beans.Item;
 import raisemeup.model.beans.User;
+import raisemeup.model.beans.UserBuilder;
 
 
 /**
@@ -24,6 +27,7 @@ public class AdminUsers extends javax.swing.JFrame {
      */
     public AdminUsers() {
         initComponents();
+        myInit();
     }
 
     /**
@@ -37,18 +41,17 @@ public class AdminUsers extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tableUsers = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        labName = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        texName = new javax.swing.JTextField();
+        texEmail = new javax.swing.JTextField();
+        texPassword = new javax.swing.JTextField();
+        butUpdate = new javax.swing.JButton();
+        butRemoveUser = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         butBack = new javax.swing.JButton();
+        butList = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,46 +73,54 @@ public class AdminUsers extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tableUsers);
 
-        jButton1.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
-        jButton1.setText("List Users");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        labName.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
+        labName.setText("Username");
+
+        jLabel2.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
+        jLabel2.setText("Password");
+
+        jLabel3.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
+        jLabel3.setText("Email");
+
+        texName.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
+        texName.setEnabled(false);
+
+        texEmail.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
+
+        texPassword.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
+
+        butUpdate.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
+        butUpdate.setText("Update");
+        butUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                butUpdateActionPerformed(evt);
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
-        jLabel1.setText("Username");
-
-        jLabel2.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
-        jLabel2.setText("Password");
-
-        jLabel3.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
-        jLabel3.setText("Email");
-
-        jTextField1.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
-
-        jTextField2.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
-
-        jTextField3.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
-
-        jButton2.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
-        jButton2.setText("Add");
-
-        jButton3.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
-        jButton3.setText("Update");
-
-        jButton4.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
-        jButton4.setText("Remove");
+        butRemoveUser.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
+        butRemoveUser.setText("Remove");
+        butRemoveUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                butRemoveUserActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Hobo Std", 0, 18)); // NOI18N
         jLabel4.setText("User settings");
 
-        butBack.setFont(new java.awt.Font("Hobo Std", 0, 10)); // NOI18N
+        butBack.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
         butBack.setText("Back");
         butBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 butBackActionPerformed(evt);
+            }
+        });
+
+        butList.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
+        butList.setText("List Users");
+        butList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                butListActionPerformed(evt);
             }
         });
 
@@ -119,34 +130,35 @@ public class AdminUsers extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))
                         .addContainerGap(30, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel1))
+                            .addComponent(labName))
                         .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jTextField1)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING))
+                                    .addComponent(texName)
+                                    .addComponent(texEmail, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(texPassword, javax.swing.GroupLayout.Alignment.LEADING))
                                 .addGap(293, 293, 293))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(101, 101, 101)
+                                .addComponent(butUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(butRemoveUser, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(butBack, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                .addComponent(butBack, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(butList)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,25 +167,24 @@ public class AdminUsers extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addGap(29, 29, 29)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(butList)
+                .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(labName)
+                    .addComponent(texName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(texPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                    .addComponent(texEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
+                    .addComponent(butUpdate)
+                    .addComponent(butRemoveUser)
                     .addComponent(butBack))
                 .addContainerGap())
         );
@@ -181,32 +192,93 @@ public class AdminUsers extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void myInit(){
+        
+        listUsers();
+        
+        tableUsers.addMouseListener(new MouseAdapter(){
+            
+            public void mouseClicked(MouseEvent e){
+                DefaultTableModel model = (DefaultTableModel) tableUsers.getModel();
+                int i = tableUsers.getSelectedRow();
+
+                texName.setText(model.getValueAt(i, 0).toString());
+                texPassword.setText(model.getValueAt(i, 1).toString());
+                texEmail.setText(model.getValueAt(i, 2).toString());
+        
+            }
+        });
+    }
+    
+    private void listUsers(){
         Map<Integer,User> users = new HashMap<Integer, User>();
         
         users = RaiseMeUp.listUsers();
+        DefaultTableModel model = (DefaultTableModel) tableUsers.getModel();
+        model.setRowCount(0);
         
-        DefaultTableModel model = new DefaultTableModel();
-        tableUsers.setModel(model);
-        
-        Object[] row = new Object[3];
         for (Map.Entry<Integer, User> i : users.entrySet()){
-            row[0] = i.getValue().getUsername();
-            row[1] = i.getValue().getPassword();
-            row[2] = i.getValue().getEmail();
-            System.out.println(i.getValue().getUsername());
-            model.addRow(row);
+            //System.out.println(i.getValue().getUsername());
+            model.addRow(new Object[]{i.getValue().getUsername(), i.getValue().getPassword(), i.getValue().getEmail()});
         }
-        
-        
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
-
+    }
+  
+    private void clearTextFields(){
+        texName.setText("");
+        texPassword.setText("");
+        texEmail.setText("");
+    }
+    
     private void butBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butBackActionPerformed
         RaiseMeUp.setAdminWindow(new AdminWindow());
         this.setVisible(false);
         RaiseMeUp.getAdminWindow().setVisible(true);
     }//GEN-LAST:event_butBackActionPerformed
+
+    private void butRemoveUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butRemoveUserActionPerformed
+        DefaultTableModel model = (DefaultTableModel) tableUsers.getModel();
+        int i = tableUsers.getSelectedRow();
+        
+        if (i >= 0){
+            UserBuilder ub = new UserBuilder().setUsername(model.getValueAt(i, 0).toString());
+            RaiseMeUp.removeUser(ub.createUser());
+            model.removeRow(i);
+        }
+        clearTextFields();
+        listUsers();
+        System.out.println("i = " + i);
+    }//GEN-LAST:event_butRemoveUserActionPerformed
+
+    private void butUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butUpdateActionPerformed
+        DefaultTableModel model = (DefaultTableModel) tableUsers.getModel();
+        int i = tableUsers.getSelectedRow();
+        
+        
+        if (i >= 0){
+            UserBuilder ub = new UserBuilder().setUsername(texName.getText()).
+                    setPassword(texPassword.getText()).
+                    setEmail(texEmail.getText());
+            RaiseMeUp.updateUser(ub.createUser());
+            
+            model.setValueAt(texName.getText(), i, 0);
+            model.setValueAt(texPassword.getText(), i, 1);
+            model.setValueAt(texEmail.getText(), i, 2);
+        }
+        clearTextFields();
+    }//GEN-LAST:event_butUpdateActionPerformed
+
+    private void butListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butListActionPerformed
+        Map<Integer,User> users = new HashMap<Integer, User>();
+        
+        users = RaiseMeUp.listUsers();
+        DefaultTableModel model = (DefaultTableModel) tableUsers.getModel();
+        model.setRowCount(0);
+        
+        for (Map.Entry<Integer, User> i : users.entrySet()){
+            //System.out.println(i.getValue().getUsername());
+            model.addRow(new Object[]{i.getValue().getUsername(), i.getValue().getPassword(), i.getValue().getEmail()});
+        }
+    }//GEN-LAST:event_butListActionPerformed
 
     /**
      * @param args the command line arguments
@@ -245,18 +317,17 @@ public class AdminUsers extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton butBack;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton butList;
+    private javax.swing.JButton butRemoveUser;
+    private javax.swing.JButton butUpdate;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JLabel labName;
     private javax.swing.JTable tableUsers;
+    private javax.swing.JTextField texEmail;
+    private javax.swing.JTextField texName;
+    private javax.swing.JTextField texPassword;
     // End of variables declaration//GEN-END:variables
 }

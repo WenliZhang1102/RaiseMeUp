@@ -33,6 +33,9 @@ public class AdminWindow extends javax.swing.JFrame {
         butPets = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         butBack = new javax.swing.JButton();
+        butFood = new javax.swing.JButton();
+        butUpgrade = new javax.swing.JButton();
+        butJobs = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -63,6 +66,30 @@ public class AdminWindow extends javax.swing.JFrame {
             }
         });
 
+        butFood.setFont(new java.awt.Font("Hobo Std", 0, 14)); // NOI18N
+        butFood.setText("Foods");
+        butFood.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                butFoodActionPerformed(evt);
+            }
+        });
+
+        butUpgrade.setFont(new java.awt.Font("Hobo Std", 0, 14)); // NOI18N
+        butUpgrade.setText("Upgrades");
+        butUpgrade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                butUpgradeActionPerformed(evt);
+            }
+        });
+
+        butJobs.setFont(new java.awt.Font("Hobo Std", 0, 14)); // NOI18N
+        butJobs.setText("Jobs");
+        butJobs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                butJobsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -72,7 +99,10 @@ public class AdminWindow extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(butUsers, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
                     .addComponent(butPets, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(butBack, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(butBack, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(butFood, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(butUpgrade, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(butJobs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(147, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -88,9 +118,15 @@ public class AdminWindow extends javax.swing.JFrame {
                 .addComponent(butUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(butPets, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(butFood, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(butUpgrade, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(butJobs, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addComponent(butBack, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34))
+                .addGap(22, 22, 22))
         );
 
         pack();
@@ -113,6 +149,24 @@ public class AdminWindow extends javax.swing.JFrame {
         this.setVisible(false);
         RaiseMeUp.getLogin().setVisible(true);
     }//GEN-LAST:event_butBackActionPerformed
+
+    private void butFoodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butFoodActionPerformed
+        RaiseMeUp.setAdminFoods(new AdminFoods());
+        this.setVisible(false);
+        RaiseMeUp.getAdminFoods().setVisible(true);
+    }//GEN-LAST:event_butFoodActionPerformed
+
+    private void butUpgradeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butUpgradeActionPerformed
+        RaiseMeUp.setAdminUpgrades(new AdminUpgrades());
+        this.setVisible(false);
+        RaiseMeUp.getAdminUpgrades().setVisible(true);
+    }//GEN-LAST:event_butUpgradeActionPerformed
+
+    private void butJobsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butJobsActionPerformed
+        RaiseMeUp.setAdminJobs(new AdminJobs());
+        this.setVisible(false);
+        RaiseMeUp.getAdminJobs().setVisible(true);
+    }//GEN-LAST:event_butJobsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -151,7 +205,10 @@ public class AdminWindow extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton butBack;
+    private javax.swing.JButton butFood;
+    private javax.swing.JButton butJobs;
     private javax.swing.JButton butPets;
+    private javax.swing.JButton butUpgrade;
     private javax.swing.JButton butUsers;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables

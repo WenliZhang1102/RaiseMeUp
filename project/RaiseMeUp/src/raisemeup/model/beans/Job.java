@@ -16,10 +16,12 @@ public class Job {
     private int impacthygiene;
     private int impactfun;
     private String title;
+    private int length;
     private String image;
     private String client;
     private String message;
-    private int petid;
+    private int reward;
+    private String species;
 
     /**
      * @return the id
@@ -148,17 +150,45 @@ public class Job {
     }
 
     /**
-     * @return the petid
+     * @return the length
      */
-    public int getPetid() {
-        return petid;
+    public int getLength() {
+        return length;
     }
 
     /**
-     * @param petid the petid to set
+     * @param length the length to set
      */
-    public void setPetid(int petid) {
-        this.petid = petid;
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    /**
+     * @return the reward
+     */
+    public int getReward() {
+        return reward;
+    }
+
+    /**
+     * @param reward the reward to set
+     */
+    public void setReward(int reward) {
+        this.reward = reward;
+    }
+
+    /**
+     * @return the species
+     */
+    public String getSpecies() {
+        return species;
+    }
+
+    /**
+     * @param species the species to set
+     */
+    public void setSpecies(String species) {
+        this.species = species;
     }
     
     

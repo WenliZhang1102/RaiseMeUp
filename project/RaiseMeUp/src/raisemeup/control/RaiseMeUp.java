@@ -9,11 +9,19 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import raisemeup.model.DAO;
+import raisemeup.model.beans.Food;
+import raisemeup.model.beans.Job;
 import raisemeup.model.beans.Pet;
 import raisemeup.model.beans.PetBuilder;
+import raisemeup.model.beans.Upgrade;
 import raisemeup.model.beans.User;
 import raisemeup.model.beans.UserBuilder;
+import raisemeup.view.AdminFoods;
+import raisemeup.view.AdminJobs;
 import raisemeup.view.AdminPets;
+import raisemeup.view.AdminPetsItems;
+import raisemeup.view.AdminPetsJobs;
+import raisemeup.view.AdminUpgrades;
 import raisemeup.view.AdminUsers;
 import raisemeup.view.AdminWindow;
 import raisemeup.view.ErrorMessage;
@@ -39,6 +47,11 @@ public class RaiseMeUp {
     private static AdminUsers adminUsers;
     private static AdminWindow adminWindow;
     private static AdminPets adminPets;
+    private static AdminPetsItems adminPetsItems;
+    private static AdminFoods adminFoods;
+    private static AdminUpgrades adminUpgrades;
+    private static AdminJobs adminJobs;
+    private static AdminPetsJobs adminPetsJobs;
     
     
     private static User currentUser;
@@ -160,11 +173,306 @@ public class RaiseMeUp {
         return true;
     }
     
-    public static Map<Integer, User> listUsers(){
+    public static void bookMyNewAnimal(String animalname, String type, String variant, String imagestring) {
+        PetBuilder pb = new PetBuilder().setName(animalname).setType(type).setVariant(variant).setOwner(currentUser.getId()).setImage(imagestring);
+        Pet newPet = pb.createPet();
+        try {
+            dao.addPet(newPet);
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Cannot add pet to the database!", ex);
+        }
+    }
+    
+    public static boolean newFood (Food f){
+        
+        try {
+            dao.addFood(f);
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Could not add food to database!", ex);
+            return false;
+        }
+        return true;
+    }
+    
+    public static boolean newUpgrade (Upgrade u){
+        
+        try {
+            dao.addUpgrade(u);
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Could not add upgrade to database!", ex);
+            return false;
+        }
+        return true;
+    }   
+    
+    public static boolean newJob (Job j){
+        
+        try {
+            dao.addJob(j);
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Could not add job to database!", ex);
+            return false;
+        }
+        return true;
+    }
+    
+    public static boolean newFoodOwned (Pet p, Food f, int piece){
+        
+        try {
+            dao.addFoodOwned(p,f, piece);
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Could not add owned food to database!", ex);
+            return false;
+        }
+        return true;
+    }
+    
+    public static boolean newUpgradeOwned (Pet p, Upgrade u, int piece){
+        
+        try {
+            dao.addUpgradeOwned(p,u, piece);
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Could not add owned upgrade to database!", ex);
+            return false;
+        }
+        return true;
+    }
+ 
+    public static boolean newJobOwned (Pet p, Job j, int timeworked){
+        
+        try {
+            dao.addJobOwned(p, j, timeworked);
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Could not add owned job to database!", ex);
+            return false;
+        }
+        return true;
+    }
+    
+    
+    public static Map<Integer, User> listUsers() {
         Map<Integer,User> users = new HashMap<Integer, User>();
-        users = dao.giveMeTheUsers();
+        try {
+            users = dao.getUser();
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Cannot get user data from database!", ex);
+        }
         
         return users;
+    }
+    
+    public static Map<Integer, Pet> listPets(){
+        Map<Integer,Pet> pets = new HashMap<Integer, Pet>();
+        try {
+            pets = dao.getPet();
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Cannot get pet data from database!", ex);
+        }
+        
+        return pets;
+    }
+    
+    public static Map<Integer, Food> listFoods(){
+        Map<Integer,Food> foods = new HashMap<Integer, Food>();
+        try {
+            foods = dao.getFood();
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Cannot get foods data from database!", ex);
+        }
+        
+        return foods;
+    }
+    
+    public static Map<Integer, Upgrade> listUpgrades(){
+        Map<Integer,Upgrade> upgrades = new HashMap<Integer, Upgrade>();
+        try {
+            upgrades = dao.getUpgrade();
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Cannot get upgrades data from database!", ex);
+        }
+        
+        return upgrades;
+    }
+    
+    public static Map<Integer, Job> listJobs(){
+        Map<Integer,Job> jobs = new HashMap<Integer, Job>();
+        try {
+            jobs = dao.getJob();
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Cannot get jobs data from database!", ex);
+        }
+        
+        return jobs;
+    }
+    
+    
+    public static boolean removeUser(User u){
+        
+        try {
+            dao.delUser(u);
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Cannot delete user from database!", ex);
+        }
+        
+        return true;
+    }
+    
+    public static boolean removePet(Pet p){
+        
+        try {
+            dao.delPet(p);
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Cannot delete pet from database!", ex);
+        }
+        
+        return true;
+    }
+    
+    public static boolean removeFood(Food f){
+        
+        try {
+            dao.delFood(f);
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Cannot delete food from database!", ex);
+        }
+        
+        return true;
+    }
+    
+    public static boolean removeUpgrade(Upgrade u){
+        
+        try {
+            dao.delUpgrade(u);
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Cannot delete upgrade from database!", ex);
+        }
+        
+        return true;
+    }
+    
+    public static boolean removeJob(Job j){
+        
+        try {
+            dao.delJob(j);
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Cannot delete job from database!", ex);
+        }
+        
+        return true;
+    }
+    
+    public static boolean removeFoodOwned(Pet p, Food f){
+        
+        try {
+            dao.delFoodOwned(p, f);
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Cannot delete owned food from database!", ex);
+        }
+        
+        return true;
+    }
+    
+    public static boolean removeUpgradeOwned(Pet p, Upgrade u){
+        
+        try {
+            dao.delUpgradeOwned(p, u);
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Cannot delete owned upgrade from database!", ex);
+        }
+        
+        return true;
+    }
+    
+    public static boolean removeJobOwned(Pet p, Job j){
+        
+        try {
+            dao.delJobOwned(p, j);
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Cannot delete owned job from database!", ex);
+        }
+        
+        return true;
+    }
+    
+    
+    public static boolean updateUser(User u){
+        try {
+            dao.updateUser(u);
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Cannot update user in database!", ex);
+        }
+        
+        return true;
+    }
+    
+    public static boolean updatePet(Pet p){
+        try {
+            dao.updatePet(p);
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Cannot update pet in database!", ex);
+        }
+        
+        return true;
+    }
+    
+    public static boolean updateFood(Food f){
+        try {
+            dao.updateFood(f);
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Cannot update food in database!", ex);
+        }
+        
+        return true;
+    }
+    
+    public static boolean updateUpgrade(Upgrade u){
+        try {
+            dao.updateUpgrade(u);
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Cannot update upgrade in database!", ex);
+        }
+        
+        return true;
+    }
+    
+    public static boolean updateJob(Job j){
+        try {
+            dao.updateJob(j);
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Cannot update job in database!", ex);
+        }
+        
+        return true;
+    }
+    
+    public static boolean updateFoodOwned(Pet p, Food f, int piece){
+        try {
+            dao.updateFoodOwned(p, f, piece);
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Cannot update owned food in database!", ex);
+        }
+        
+        return true;
+    }
+    
+    public static boolean updateUpgradeOwned(Pet p, Upgrade u, int piece){
+        try {
+            dao.updateUpgradeOwned(p, u, piece);
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Cannot update owned upgrade in database!", ex);
+        }
+        
+        return true;
+    }
+     
+    public static boolean updateJobOwned(Pet p, Job j, int timeworked){
+        try {
+            dao.updateJobOwned(p, j, timeworked);
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Cannot update owned job in database!", ex);
+        }
+        
+        return true;
     }
     
     
@@ -182,11 +490,7 @@ public class RaiseMeUp {
         boolean loggedin=false;
         Map<Integer,User> users = new HashMap<Integer, User>();
         
-        try {
-                users = dao.getUser();
-            } catch (SQLException ex) {
-                Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Cannot get user data from database!", ex);
-            }
+        
         
         if ("admin".equals(username) && "admin".equals(password)){
             adminWindow = new AdminWindow();
@@ -195,6 +499,12 @@ public class RaiseMeUp {
             loggedin = true;
         } else {
         
+            try {
+                users = dao.getUser();
+            } catch (SQLException ex) {
+                Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Cannot get user data from database!", ex);
+            }
+            
             for(Map.Entry<Integer,User> user : users.entrySet()) {
                 if(user.getValue().getUsername().equals(username) && user.getValue().getPassword().equals(password)) {
                     setCurrentUser(user.getValue());
@@ -215,15 +525,7 @@ public class RaiseMeUp {
         
     }
     
-    public static void bookMyNewAnimal(String animalname, String type, String variant, String imagestring) {
-        PetBuilder pb = new PetBuilder().setName(animalname).setType(type).setVariant(variant).setOwner(currentUser.getId()).setImage(imagestring);
-        Pet newPet = pb.createPet();
-        try {
-            dao.addPet(newPet);
-        } catch (SQLException ex) {
-            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Cannot add pet to the database!", ex);
-        }
-    }
+    
 
     /**
      * @return the errorMessage
@@ -293,6 +595,76 @@ public class RaiseMeUp {
      */
     public static void setAdminPets(AdminPets aAdminPets) {
         adminPets = aAdminPets;
+    }
+
+    /**
+     * @return the adminPetsItems
+     */
+    public static AdminPetsItems getAdminPetsItems() {
+        return adminPetsItems;
+    }
+
+    /**
+     * @param aAdminPetsItems the adminPetsItems to set
+     */
+    public static void setAdminPetsItems(AdminPetsItems aAdminPetsItems) {
+        adminPetsItems = aAdminPetsItems;
+    }
+
+    /**
+     * @return the adminFoods
+     */
+    public static AdminFoods getAdminFoods() {
+        return adminFoods;
+    }
+
+    /**
+     * @param aAdminFoods the adminFoods to set
+     */
+    public static void setAdminFoods(AdminFoods aAdminFoods) {
+        adminFoods = aAdminFoods;
+    }
+
+    /**
+     * @return the adminUpgrades
+     */
+    public static AdminUpgrades getAdminUpgrades() {
+        return adminUpgrades;
+    }
+
+    /**
+     * @param aAdminUpgrades the adminUpgrades to set
+     */
+    public static void setAdminUpgrades(AdminUpgrades aAdminUpgrades) {
+        adminUpgrades = aAdminUpgrades;
+    }
+
+    /**
+     * @return the adminJobs
+     */
+    public static AdminJobs getAdminJobs() {
+        return adminJobs;
+    }
+
+    /**
+     * @param aAdminJobs the adminJobs to set
+     */
+    public static void setAdminJobs(AdminJobs aAdminJobs) {
+        adminJobs = aAdminJobs;
+    }
+
+    /**
+     * @return the adminPetsJobs
+     */
+    public static AdminPetsJobs getAdminPetsJobs() {
+        return adminPetsJobs;
+    }
+
+    /**
+     * @param aAdminPetsJobs the adminPetsJobs to set
+     */
+    public static void setAdminPetsJobs(AdminPetsJobs aAdminPetsJobs) {
+        adminPetsJobs = aAdminPetsJobs;
     }
     
     
