@@ -294,10 +294,10 @@ public class DAO {
 
 		Connection conn = null;
 		PreparedStatement pst = null;
-                //Connection conn2 = null;
-		//PreparedStatement pst2 = null;
-                //Connection conn3 = null;
-		//PreparedStatement pst3 = null;
+                Connection conn2 = null;
+		PreparedStatement pst2 = null;
+                Connection conn3 = null;
+		PreparedStatement pst3 = null;
 		try {
 			conn = DriverManager.getConnection("jdbc:sqlite:"+dbfile);
 			pst = conn.prepareStatement(SQL_addPet);
@@ -316,27 +316,25 @@ public class DAO {
 			
 			pst.executeUpdate();
                         
-                        //conn = DriverManager.getConnection("jdbc:sqlite:"+dbfile);
-			
-                        //conn = DriverManager.getConnection("jdbc:sqlite:"+dbfile);
-			
+                        conn2 = DriverManager.getConnection("jdbc:sqlite:"+dbfile);
+			pst2 = conn2.prepareStatement(SQL_addPetsFoods);
+                        conn3 = DriverManager.getConnection("jdbc:sqlite:"+dbfile);
+			pst3 = conn3.prepareStatement(SQL_addPetsUpgrades);
                         
 			
                         int index2 = 1;
                         for (Map.Entry<Item, Integer> i : p.getOwneditems().entrySet()){
                             index2 = 1;
                             if (i instanceof Food){
-                                pst = conn.prepareStatement(SQL_addPetsFoods);
-                                pst.setInt(index2++, p.getPetid());
-                                pst.setInt(index2++, i.getKey().getId());
-                                pst.setInt(index2++, i.getValue());
-                                pst.executeUpdate();
+                                pst2.setInt(index2++, p.getPetid());
+                                pst2.setInt(index2++, i.getKey().getId());
+                                pst2.setInt(index2++, i.getValue());
+                                pst2.executeUpdate();
                             } else {
-                                pst = conn.prepareStatement(SQL_addPetsUpgrades);
-                                pst.setInt(index2++, p.getPetid());
-                                pst.setInt(index2++, i.getKey().getId());
-                                pst.setInt(index2++, i.getValue());
-                                pst.executeUpdate();
+                                pst3.setInt(index2++, p.getPetid());
+                                pst3.setInt(index2++, i.getKey().getId());
+                                pst3.setInt(index2++, i.getValue());
+                                pst3.executeUpdate();
                             }
                         }
                         
@@ -354,30 +352,30 @@ public class DAO {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-                        /*try {
+                        try {
 				if(pst2 != null)
 					pst2.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
-			}*/
-			/*try {
+			}
+			try {
 				if(conn2 != null)
 					conn2.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
-			}*/
-                        /*try {
+			}
+                        try {
 				if(pst3 != null)
 					pst3.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
-			}*/
-			/*try {
+			}
+			try {
 				if(conn3 != null)
 					conn3.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
-			}*/
+			}
 		}
 		return true;
 	}
@@ -389,8 +387,9 @@ public class DAO {
 		Statement st2 = null;
                 Connection conn3 = null;
 		Statement st3 = null;
-                //Statement st4 = null;
-		//Toroljuk a memoriabol a customereket (azert tartjuk bennt, mert lehetnek kesobb olyan muveletek, melyekhez nem kell frissiteni)
+                Connection conn4 = null;
+		Statement st4 = null;		
+                //Toroljuk a memoriabol a customereket (azert tartjuk bennt, mert lehetnek kesobb olyan muveletek, melyekhez nem kell frissiteni)
 		pets.clear();
 		
 		try {
@@ -422,8 +421,8 @@ public class DAO {
                                 p.setOwner(rs.getInt("userid"));
 				
                                 
-                                //conn2 = DriverManager.getConnection("jdbc:sqlite:"+dbfile);
-                                st2 = conn.createStatement();
+                                conn2 = DriverManager.getConnection("jdbc:sqlite:"+dbfile);
+                                st2 = conn2.createStatement();
                                 ResultSet rs2 = st2.executeQuery("select Food.foodid, name, price, valuedog, valuecat, valuefish, valuepenguin, image, piece from Food, FoodOwned where FoodOwned.petid = " + rs.getInt("petid") + " and Food.foodid = FoodOwned.foodid");
                                 while(rs2.next()){
                                     Food f = new Food();
@@ -439,8 +438,8 @@ public class DAO {
                                     p.getOwneditems().put(f, rs2.getInt("piece"));
                                 }
                                 
-                                //conn3 = DriverManager.getConnection("jdbc:sqlite:"+dbfile);
-                                st3 = conn.createStatement();
+                                conn3 = DriverManager.getConnection("jdbc:sqlite:"+dbfile);
+                                st3 = conn3.createStatement();
                                 ResultSet rs3 = st3.executeQuery("select Upgrade.upgradeid, name, price, property, species, value, image, piece from Upgrade, UpgradeOwned where UpgradeOwned.petid = " + rs.getInt("petid") + " and Upgrade.upgradeid = UpgradeOwned.upgradeid");
 
                                 while(rs3.next()){
@@ -456,8 +455,9 @@ public class DAO {
                                     p.getOwneditems().put(up, rs3.getInt("piece"));
                                 }
                                 
-                                st = conn.createStatement();
-                                ResultSet rs4 = st.executeQuery("select Job.id, impactenergy, impacthunger, impacthygiene, impactfun, title, length, image, client, message, reward, species, timeworked from Job, JobOwned where JobOwned.petid = " + rs.getInt("petid") + " and Job.id = JobOwned.jobid");
+                                conn4 = DriverManager.getConnection("jdbc:sqlite:"+dbfile);
+                                st4 = conn4.createStatement();
+                                ResultSet rs4 = st4.executeQuery("select Job.id, impactenergy, impacthunger, impacthygiene, impactfun, title, length, image, client, message, reward, species, timeworked from Job, JobOwned where JobOwned.petid = " + rs.getInt("petid") + " and Job.id = JobOwned.jobid");
                                 while(rs4.next()){
                                     Job j = new Job();
                                     
@@ -499,30 +499,35 @@ public class DAO {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			/*try {
+			try {
 				if(conn2 != null)
 					conn2.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
-			}*/
+			}
                         try {
 				if(st3 != null)
 					st3.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-                        /*try {
-				if(st4 != null)
-					st4.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}*/
-			/*try {
+			try {
 				if(conn3 != null)
 					conn3.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
-			}*/
+			}try {
+				if(st4 != null)
+					st4.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				if(conn4 != null)
+					conn4.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		return pets;

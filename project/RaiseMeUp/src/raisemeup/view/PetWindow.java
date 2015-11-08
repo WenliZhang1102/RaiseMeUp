@@ -536,7 +536,7 @@ public class PetWindow extends javax.swing.JFrame {
     
     private void observeStats() {
         final Timer timer = new Timer("MainTimer");
-        PetObserver observer = new PetObserver();
+        final PetObserver observer = new PetObserver();
         
         
         timer.scheduleAtFixedRate(new TimerTask() {
