@@ -21,6 +21,7 @@ import raisemeup.view.AdminJobs;
 import raisemeup.view.AdminPets;
 import raisemeup.view.AdminPetsItems;
 import raisemeup.view.AdminPetsJobs;
+import raisemeup.view.AdminTiming;
 import raisemeup.view.AdminUpgrades;
 import raisemeup.view.AdminUsers;
 import raisemeup.view.AdminWindow;
@@ -52,12 +53,12 @@ public class RaiseMeUp {
     private static AdminUpgrades adminUpgrades;
     private static AdminJobs adminJobs;
     private static AdminPetsJobs adminPetsJobs;
-    
+    private static AdminTiming adminTiming;
     
     private static User currentUser;
-	private static Pet currentPet;
+    private static Pet currentPet;
 	
-	private static float timeModifier=(float)0.05;
+    private static float timeModifier=(float)0.05;// ha 1, akkor  1 perc 1 ora 0.05 *600
     
     public static void init() {
         if(getLogin()==null) setLogin(new Login());
@@ -754,6 +755,20 @@ public class RaiseMeUp {
     
     public static void modifyPet() {
         
+    }
+
+    /**
+     * @return the adminTiming
+     */
+    public static AdminTiming getAdminTiming() {
+        return adminTiming;
+    }
+
+    /**
+     * @param aAdminTiming the adminTiming to set
+     */
+    public static void setAdminTiming(AdminTiming aAdminTiming) {
+        adminTiming = aAdminTiming;
     }
     
     

@@ -62,7 +62,7 @@ public class PetObserver {
         
         //save changes to database
         if(change) {
-            
+            RaiseMeUp.updatePet(RaiseMeUp.getCurrentPet());
         }
         
         if(RaiseMeUp.getCurrentPet().getEnergy()==0 && RaiseMeUp.getCurrentPet().getFun()==0 && RaiseMeUp.getCurrentPet().getHunger()==0 && RaiseMeUp.getCurrentPet().getHygiene()==0 && nowDeparting) {

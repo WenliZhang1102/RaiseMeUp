@@ -36,6 +36,7 @@ public class AdminWindow extends javax.swing.JFrame {
         butFood = new javax.swing.JButton();
         butUpgrade = new javax.swing.JButton();
         butJobs = new javax.swing.JButton();
+        butTiming = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -90,6 +91,14 @@ public class AdminWindow extends javax.swing.JFrame {
             }
         });
 
+        butTiming.setFont(new java.awt.Font("Hobo Std", 0, 14)); // NOI18N
+        butTiming.setText("Timing");
+        butTiming.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                butTimingActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -102,7 +111,8 @@ public class AdminWindow extends javax.swing.JFrame {
                     .addComponent(butBack, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(butFood, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(butUpgrade, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(butJobs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(butJobs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(butTiming, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(147, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -124,7 +134,9 @@ public class AdminWindow extends javax.swing.JFrame {
                 .addComponent(butUpgrade, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(butJobs, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(butTiming, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
                 .addComponent(butBack, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22))
         );
@@ -168,6 +180,12 @@ public class AdminWindow extends javax.swing.JFrame {
         RaiseMeUp.getAdminJobs().setVisible(true);
     }//GEN-LAST:event_butJobsActionPerformed
 
+    private void butTimingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butTimingActionPerformed
+        RaiseMeUp.setAdminTiming(new AdminTiming());
+        this.setVisible(false);
+        RaiseMeUp.getAdminTiming().setVisible(true);
+    }//GEN-LAST:event_butTimingActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -208,6 +226,7 @@ public class AdminWindow extends javax.swing.JFrame {
     private javax.swing.JButton butFood;
     private javax.swing.JButton butJobs;
     private javax.swing.JButton butPets;
+    private javax.swing.JButton butTiming;
     private javax.swing.JButton butUpgrade;
     private javax.swing.JButton butUsers;
     private javax.swing.JLabel jLabel1;
