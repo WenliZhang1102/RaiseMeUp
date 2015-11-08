@@ -5,14 +5,22 @@
  */
 package raisemeup.view;
 
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import raisemeup.control.RaiseMeUp;
+import raisemeup.model.PetObserver;
 import raisemeup.model.beans.User;
+import raisemeup.model.beans.Pet;
 
 /**
  *
@@ -20,10 +28,24 @@ import raisemeup.model.beans.User;
  */
 public class PetWindow extends javax.swing.JFrame {
 
+    private boolean isObserving;
+    private float hungerModifier;
+    private float energyModifier;
+    private float funModifier;
+    private float hygieneModifier;
+    
+    private float changeEnergy = 0;
+    private float changeHunger = 0;
+    private float changeHygiene = 0;
+    private float changeFun = 0;
+    
+    private Calendar currentTime= Calendar.getInstance();
+    
     /**
      * Creates new form PetWindow
      */
-    public PetWindow() {
+    public PetWindow(Pet pet) {
+        RaiseMeUp.setCurrentPet(pet);
         initComponents();
         myInit();
     }
@@ -37,36 +59,44 @@ public class PetWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
-        jProgressBar1 = new javax.swing.JProgressBar();
+        panStats = new javax.swing.JPanel();
+        pbHunger = new javax.swing.JProgressBar();
         lblHunger = new javax.swing.JLabel();
         lblHunger1 = new javax.swing.JLabel();
-        jProgressBar2 = new javax.swing.JProgressBar();
+        pbEnergy = new javax.swing.JProgressBar();
         lblHunger2 = new javax.swing.JLabel();
-        jProgressBar3 = new javax.swing.JProgressBar();
+        pbFun = new javax.swing.JProgressBar();
         lblHunger3 = new javax.swing.JLabel();
-        jProgressBar4 = new javax.swing.JProgressBar();
+        pbHygiene = new javax.swing.JProgressBar();
         lblMoney = new javax.swing.JLabel();
         lblCoinIcon = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
+        panPetDisplay = new javax.swing.JPanel();
         lblEmotionDislpay = new javax.swing.JLabel();
         lblPetDisplay = new javax.swing.JLabel();
         lblUpgrade1 = new javax.swing.JLabel();
         lblUpgrade2 = new javax.swing.JLabel();
+        lblPetName = new javax.swing.JLabel();
+        lblDAL = new javax.swing.JLabel();
+        lblDAR = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        butLogout1 = new javax.swing.JButton();
+        butMarket = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         butExit = new javax.swing.JButton();
         lblUserIcon = new javax.swing.JLabel();
         butLogout = new javax.swing.JButton();
+        butBack = new javax.swing.JButton();
+        panTime = new javax.swing.JPanel();
+        lblMoney1 = new javax.swing.JLabel();
+        lblTime = new javax.swing.JLabel();
+        lblPaceWords = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        panStats.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jProgressBar1.setValue(50);
-        jProgressBar1.setName(""); // NOI18N
-        jProgressBar1.setStringPainted(true);
+        pbHunger.setValue(50);
+        pbHunger.setName(""); // NOI18N
+        pbHunger.setStringPainted(true);
 
         lblHunger.setFont(new java.awt.Font("Hobo Std", 2, 14)); // NOI18N
         lblHunger.setText("Hunger:");
@@ -74,142 +104,157 @@ public class PetWindow extends javax.swing.JFrame {
         lblHunger1.setFont(new java.awt.Font("Hobo Std", 2, 14)); // NOI18N
         lblHunger1.setText("Energy:");
 
-        jProgressBar2.setValue(75);
-        jProgressBar2.setStringPainted(true);
+        pbEnergy.setValue(75);
+        pbEnergy.setStringPainted(true);
 
         lblHunger2.setFont(new java.awt.Font("Hobo Std", 2, 14)); // NOI18N
         lblHunger2.setText("Fun:");
 
-        jProgressBar3.setValue(75);
-        jProgressBar3.setStringPainted(true);
+        pbFun.setValue(75);
+        pbFun.setStringPainted(true);
 
         lblHunger3.setFont(new java.awt.Font("Hobo Std", 2, 14)); // NOI18N
         lblHunger3.setText("Hygiene:");
 
-        jProgressBar4.setValue(40);
-        jProgressBar4.setStringPainted(true);
+        pbHygiene.setValue(40);
+        pbHygiene.setStringPainted(true);
 
         lblMoney.setFont(new java.awt.Font("Hobo Std", 2, 14)); // NOI18N
         lblMoney.setText("Money:");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout panStatsLayout = new javax.swing.GroupLayout(panStats);
+        panStats.setLayout(panStatsLayout);
+        panStatsLayout.setHorizontalGroup(
+            panStatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panStatsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(panStatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panStatsLayout.createSequentialGroup()
+                        .addGroup(panStatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panStatsLayout.createSequentialGroup()
                                 .addComponent(lblHunger, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(pbHunger, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panStatsLayout.createSequentialGroup()
                                 .addComponent(lblHunger1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(pbEnergy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(panStatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panStatsLayout.createSequentialGroup()
                                 .addGap(28, 28, 28)
                                 .addComponent(lblHunger2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jProgressBar3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(pbFun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panStatsLayout.createSequentialGroup()
                                 .addComponent(lblHunger3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jProgressBar4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(pbHygiene, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panStatsLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(lblMoney)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblCoinIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        panStatsLayout.setVerticalGroup(
+            panStatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panStatsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(panStatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panStatsLayout.createSequentialGroup()
+                        .addGroup(panStatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblHunger2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jProgressBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(pbFun, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jProgressBar4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(panStatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pbHygiene, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblHunger3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(panStatsLayout.createSequentialGroup()
+                        .addGroup(panStatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblHunger, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(pbHunger, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panStatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblHunger1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jProgressBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(pbEnergy, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(panStatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panStatsLayout.createSequentialGroup()
                         .addComponent(lblCoinIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(panStatsLayout.createSequentialGroup()
                         .addComponent(lblMoney, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(20, 20, 20))))
         );
 
-        jPanel3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        panPetDisplay.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        lblEmotionDislpay.setText("jLabel1");
+        lblPetName.setFont(new java.awt.Font("Hobo Std", 0, 14)); // NOI18N
+        lblPetName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPetName.setText("PetName");
+        lblPetName.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(102, 153, 255)));
 
-        lblPetDisplay.setText("jLabel1");
+        lblDAL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/DecorArrowL.png"))); // NOI18N
 
-        lblUpgrade1.setText("Upgrade no.1");
+        lblDAR.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/DecorArrowR.png"))); // NOI18N
 
-        lblUpgrade2.setText("Upgrade no.2");
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout panPetDisplayLayout = new javax.swing.GroupLayout(panPetDisplay);
+        panPetDisplay.setLayout(panPetDisplayLayout);
+        panPetDisplayLayout.setHorizontalGroup(
+            panPetDisplayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panPetDisplayLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblPetDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panPetDisplayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblPetName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panPetDisplayLayout.createSequentialGroup()
+                        .addGroup(panPetDisplayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblPetDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panPetDisplayLayout.createSequentialGroup()
+                                .addComponent(lblDAL)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblDAR)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(panPetDisplayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panPetDisplayLayout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addComponent(lblUpgrade1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lblUpgrade2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lblEmotionDislpay, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(27, 27, 27))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        panPetDisplayLayout.setVerticalGroup(
+            panPetDisplayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panPetDisplayLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(panPetDisplayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panPetDisplayLayout.createSequentialGroup()
                         .addComponent(lblEmotionDislpay, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(44, 44, 44)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(panPetDisplayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblUpgrade1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblUpgrade2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                            .addComponent(lblUpgrade2, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)))
+                    .addGroup(panPetDisplayLayout.createSequentialGroup()
+                        .addComponent(lblPetName, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(panPetDisplayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblDAL, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblDAR, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblPetDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
         jPanel4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        butLogout1.setFont(new java.awt.Font("Hobo Std", 0, 14)); // NOI18N
-        butLogout1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/MarketButton.png"))); // NOI18N
-        butLogout1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        butLogout1.addActionListener(new java.awt.event.ActionListener() {
+        butMarket.setFont(new java.awt.Font("Hobo Std", 0, 14)); // NOI18N
+        butMarket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/MarketButton.png"))); // NOI18N
+        butMarket.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        butMarket.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                butLogout1ActionPerformed(evt);
+                butMarketActionPerformed(evt);
             }
         });
 
@@ -219,14 +264,14 @@ public class PetWindow extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(butLogout1, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                .addComponent(butMarket, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(butLogout1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(butMarket, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -253,27 +298,78 @@ public class PetWindow extends javax.swing.JFrame {
             }
         });
 
+        butBack.setFont(new java.awt.Font("Hobo Std", 0, 14)); // NOI18N
+        butBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BackButton.png"))); // NOI18N
+        butBack.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        butBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                butBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(butBack, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(butLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblUserIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(butExit, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(lblUserIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(butExit, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(butBack, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(butLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblUserIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(butExit, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        panTime.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        lblMoney1.setFont(new java.awt.Font("Hobo Std", 2, 14)); // NOI18N
+        lblMoney1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblMoney1.setText("Time pace:");
+
+        lblTime.setFont(new java.awt.Font("Hobo Std", 2, 14)); // NOI18N
+        lblTime.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTime.setText("00 : 00");
+
+        lblPaceWords.setFont(new java.awt.Font("Hobo Std", 2, 14)); // NOI18N
+        lblPaceWords.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPaceWords.setText("5 minutes = 1 hour");
+
+        javax.swing.GroupLayout panTimeLayout = new javax.swing.GroupLayout(panTime);
+        panTime.setLayout(panTimeLayout);
+        panTimeLayout.setHorizontalGroup(
+            panTimeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panTimeLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panTimeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblMoney1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+            .addComponent(lblPaceWords, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        panTimeLayout.setVerticalGroup(
+            panTimeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panTimeLayout.createSequentialGroup()
+                .addGap(7, 7, 7)
+                .addComponent(lblMoney1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblTime, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblPaceWords, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -286,22 +382,24 @@ public class PetWindow extends javax.swing.JFrame {
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(panStats, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(panPetDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(panTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(panStats, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(panPetDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -322,9 +420,16 @@ public class PetWindow extends javax.swing.JFrame {
         RaiseMeUp.getLogin().setVisible(true);
     }//GEN-LAST:event_butLogoutActionPerformed
 
-    private void butLogout1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butLogout1ActionPerformed
+    private void butMarketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butMarketActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_butLogout1ActionPerformed
+    }//GEN-LAST:event_butMarketActionPerformed
+
+    private void butBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butBackActionPerformed
+        stopObserving();
+        RaiseMeUp.setPetChooser(new PetChooser());
+        this.setVisible(false);
+        RaiseMeUp.getPetChooser().setVisible(true);
+    }//GEN-LAST:event_butBackActionPerformed
 
     private void myInit() {
         //UserIcon
@@ -347,11 +452,11 @@ public class PetWindow extends javax.swing.JFrame {
         image = RaiseMeUp.resizeImage(image, image.getType(), 40);
         lblCoinIcon.setIcon(new ImageIcon(image));
         
-        lblMoney.setText("Money: 1000");
+        lblMoney.setText("Money: " + RaiseMeUp.getCurrentPet().getMoney());
         
         //PetPicture
         try {
-            image = ImageIO.read(getClass().getResource("/images/DogBrown.png"));
+            image = ImageIO.read(getClass().getResource("/images/" + RaiseMeUp.getCurrentPet().getImage()));
         } catch (IOException ex) {
             Logger.getLogger(PetWindow.class.getName()).log(Level.SEVERE, "Cannot load Pet!", ex);
         }
@@ -359,16 +464,168 @@ public class PetWindow extends javax.swing.JFrame {
         lblPetDisplay.setIcon(new ImageIcon(image));
         
         //EmotionPicture
+        refreshEmotion();
+        if (RaiseMeUp.getCurrentPet().getType().equals("cat")) lblEmotionDislpay.setLocation(lblEmotionDislpay.getLocation().x-45, lblEmotionDislpay.getLocation().y);
+        else lblEmotionDislpay.setLocation(lblEmotionDislpay.getLocation().x-65, lblEmotionDislpay.getLocation().y);
+        
+        
+        
+        lblPetName.setLocation(lblPetName.getLocation().x+260,lblPetName.getLocation().y+180);
+        lblDAL.setLocation(lblPetName.getLocation().x-20, lblPetName.getLocation().y-5);
+        lblDAR.setLocation(lblPetName.getLocation().x+177, lblPetName.getLocation().y-5);
+        lblPetName.setText(RaiseMeUp.getCurrentPet().getName());
+        
+        isObserving=true;
+        refreshPBEnergy();
+        refreshPBFun();
+        refreshPBHunger();
+        refreshPBHygiene();
+        
+        changeEnergy=0;
+        changeFun=0;
+        changeHunger=0;
+        changeHygiene=0;
+        
+        hungerModifier=1;
+        funModifier=(float)0.7;
+        energyModifier=(float)0.6;
+        hygieneModifier=(float)0.35;
+        
+        currentTime.set(0, 0, 0, 0, 0, 0);
+        
+        if(RaiseMeUp.getTimeModifier()>=1) lblPaceWords.setText(RaiseMeUp.getTimeModifier() + " minutes = 1 hour");
+        else lblPaceWords.setText((RaiseMeUp.getTimeModifier() * 60) + " seconds = 1 hour");
+        refreshClock();
+        
+        this.repaint();
+        this.revalidate();
+        
+        observeStats();
+        
+        
+    }
+    
+    public void refreshPBHunger() {
+        pbHunger.setValue(RaiseMeUp.getCurrentPet().getHunger());
+        panStats.repaint();
+        panStats.revalidate();
+    }
+    
+    public void refreshPBHygiene() {
+        pbHygiene.setValue(RaiseMeUp.getCurrentPet().getHygiene());
+        panStats.repaint();
+        panStats.revalidate();
+    }
+    
+    public void refreshPBFun() {
+        pbFun.setValue(RaiseMeUp.getCurrentPet().getFun());
+        panStats.repaint();
+        panStats.revalidate();
+    }
+    
+    public void refreshPBEnergy() {
+        pbEnergy.setValue(RaiseMeUp.getCurrentPet().getEnergy());
+        panStats.repaint();
+        panStats.revalidate();
+    }
+    
+    public void refreshAge() {
+        
+    }
+    
+    
+    private void observeStats() {
+        final Timer timer = new Timer("MainTimer");
+        PetObserver observer = new PetObserver();
+        
+        
+        timer.scheduleAtFixedRate(new TimerTask() {
+
+            @Override
+            public void run() {
+                if(isObserving) {
+                    if((int)changeEnergy != (int)(changeEnergy + energyModifier) && RaiseMeUp.getCurrentPet().getEnergy()!=0){
+                        RaiseMeUp.getCurrentPet().setEnergy(RaiseMeUp.getCurrentPet().getEnergy()-1);
+                    }
+                    if((int)changeFun != (int)(changeFun + funModifier)  && RaiseMeUp.getCurrentPet().getFun()!=0){
+                        RaiseMeUp.getCurrentPet().setFun(RaiseMeUp.getCurrentPet().getFun()-1);
+                    }
+                    if((int)changeHunger != (int)(changeHunger + hungerModifier) && RaiseMeUp.getCurrentPet().getHunger()!=0){
+                        RaiseMeUp.getCurrentPet().setHunger(RaiseMeUp.getCurrentPet().getHunger()-1);
+                    }
+                    if((int)changeHygiene != (int)(changeHygiene + hygieneModifier) && RaiseMeUp.getCurrentPet().getHygiene()!=0){
+                        RaiseMeUp.getCurrentPet().setHygiene(RaiseMeUp.getCurrentPet().getHygiene()-1);
+                    }
+                    
+                    setChangeEnergy(changeEnergy + energyModifier);
+                    setChangeFun(changeFun + funModifier);
+                    setChangeHunger(changeHunger + hungerModifier);
+                    setChangeHygiene(changeHygiene + hygieneModifier);
+                    
+                    observer.update();
+                }
+            }
+        }, (int)(RaiseMeUp.getTimeModifier() * 10000), (int)(RaiseMeUp.getTimeModifier() * 10000));
+        
+        
+        final Timer timer2 = new Timer("DisplayTimer");
+        
+        timer2.scheduleAtFixedRate(new TimerTask() {
+
+            @Override
+            public void run() {
+                if(isObserving) {
+                    currentTime.add(Calendar.MINUTE, 1);
+                    refreshClock();
+                }
+            }
+        }, (int)(RaiseMeUp.getTimeModifier() * 1000), (int)(RaiseMeUp.getTimeModifier() * 1000));
+    }
+    
+    private void stopObserving() {
+        isObserving=false;
+    }
+    
+    private void refreshClock() {
+        lblTime.setText(((currentTime.getTime().getHours()<10)?"0":"") + currentTime.getTime().getHours() + " : " + ((currentTime.getTime().getMinutes()<10)?"0":"") + currentTime.getTime().getMinutes());
+        panTime.repaint();
+        panTime.revalidate();
+    }
+    
+    public void refreshEmotion() {
+        String strEmotion;
+        BufferedImage image = null;
+        if(RaiseMeUp.getCurrentPet().getEmotion() == 0) strEmotion="Sad";
+        else if(RaiseMeUp.getCurrentPet().getEmotion() == 1) strEmotion="Indifferent";
+        else strEmotion = "Happy";
         try {
-            image = ImageIO.read(getClass().getResource("/images/EmotionHappy.png"));
+            image = ImageIO.read(getClass().getResource("/images/Emotion" + strEmotion +  ".png"));
         } catch (IOException ex) {
             Logger.getLogger(PetWindow.class.getName()).log(Level.SEVERE, "Cannot load Emotion!", ex);
         }
+        
+        if (RaiseMeUp.getCurrentPet().getType().equals("fish")) lblPetDisplay.setSize(new Dimension(lblPetDisplay.getSize().width + 150, lblPetDisplay.getSize().height));
         image = RaiseMeUp.resizeImage(image, image.getType(), 205);
         lblEmotionDislpay.setIcon(new ImageIcon(image));
+        panPetDisplay.setLayout(null);
         
         
-        
+        panPetDisplay.repaint();
+        panPetDisplay.revalidate();
+    }
+    
+    public void petLeaves() {
+        final Timer timer = new Timer("LeaveTimer");
+        timer.scheduleAtFixedRate(new TimerTask() {
+
+        @Override
+            public void run() {
+                if(isObserving) {
+                    lblPetDisplay.setLocation(lblPetDisplay.getLocation().x-1, lblPetDisplay.getLocation().y);
+                    lblEmotionDislpay.setLocation(lblEmotionDislpay.getLocation().x-1, lblEmotionDislpay.getLocation().y);
+                }
+            }
+        }, (int)(RaiseMeUp.getTimeModifier() * 100), (int)(RaiseMeUp.getTimeModifier() * 100));
     }
     
     /**
@@ -401,33 +658,153 @@ public class PetWindow extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PetWindow().setVisible(true);
+                new PetWindow(new Pet()).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton butBack;
     private javax.swing.JButton butExit;
     private javax.swing.JButton butLogout;
-    private javax.swing.JButton butLogout1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JButton butMarket;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JProgressBar jProgressBar1;
-    private javax.swing.JProgressBar jProgressBar2;
-    private javax.swing.JProgressBar jProgressBar3;
-    private javax.swing.JProgressBar jProgressBar4;
     private javax.swing.JLabel lblCoinIcon;
+    private javax.swing.JLabel lblDAL;
+    private javax.swing.JLabel lblDAR;
     private javax.swing.JLabel lblEmotionDislpay;
     private javax.swing.JLabel lblHunger;
     private javax.swing.JLabel lblHunger1;
     private javax.swing.JLabel lblHunger2;
     private javax.swing.JLabel lblHunger3;
     private javax.swing.JLabel lblMoney;
+    private javax.swing.JLabel lblMoney1;
+    private javax.swing.JLabel lblPaceWords;
     private javax.swing.JLabel lblPetDisplay;
+    private javax.swing.JLabel lblPetName;
+    private javax.swing.JLabel lblTime;
     private javax.swing.JLabel lblUpgrade1;
     private javax.swing.JLabel lblUpgrade2;
     private javax.swing.JLabel lblUserIcon;
+    private javax.swing.JPanel panPetDisplay;
+    private javax.swing.JPanel panStats;
+    private javax.swing.JPanel panTime;
+    private javax.swing.JProgressBar pbEnergy;
+    private javax.swing.JProgressBar pbFun;
+    private javax.swing.JProgressBar pbHunger;
+    private javax.swing.JProgressBar pbHygiene;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the hungerModifier
+     */
+    public float getHungerModifier() {
+        return hungerModifier;
+    }
+
+    /**
+     * @param hungerModifier the hungerModifier to set
+     */
+    public void setHungerModifier(float hungerModifier) {
+        this.hungerModifier = hungerModifier;
+    }
+
+    /**
+     * @return the energyModifier
+     */
+    public float getEnergyModifier() {
+        return energyModifier;
+    }
+
+    /**
+     * @param energyModifier the energyModifier to set
+     */
+    public void setEnergyModifier(float energyModifier) {
+        this.energyModifier = energyModifier;
+    }
+
+    /**
+     * @return the funModifier
+     */
+    public float getFunModifier() {
+        return funModifier;
+    }
+
+    /**
+     * @param funModifier the funModifier to set
+     */
+    public void setFunModifier(float funModifier) {
+        this.funModifier = funModifier;
+    }
+
+    /**
+     * @return the hygieneModifier
+     */
+    public float getHygieneModifier() {
+        return hygieneModifier;
+    }
+
+    /**
+     * @param hygieneModifier the hygieneModifier to set
+     */
+    public void setHygieneModifier(float hygieneModifier) {
+        this.hygieneModifier = hygieneModifier;
+    }
+
+    /**
+     * @return the changeEnergy
+     */
+    public float getChangeEnergy() {
+        return changeEnergy;
+    }
+
+    /**
+     * @param changeEnergy the changeEnergy to set
+     */
+    public void setChangeEnergy(float changeEnergy) {
+        this.changeEnergy = changeEnergy;
+    }
+
+    /**
+     * @return the changeHunger
+     */
+    public float getChangeHunger() {
+        return changeHunger;
+    }
+
+    /**
+     * @param changeHunger the changeHunger to set
+     */
+    public void setChangeHunger(float changeHunger) {
+        this.changeHunger = changeHunger;
+    }
+
+    /**
+     * @return the changeHygiene
+     */
+    public float getChangeHygiene() {
+        return changeHygiene;
+    }
+
+    /**
+     * @param changeHygiene the changeHygiene to set
+     */
+    public void setChangeHygiene(float changeHygiene) {
+        this.changeHygiene = changeHygiene;
+    }
+
+    /**
+     * @return the changeFun
+     */
+    public float getChangeFun() {
+        return changeFun;
+    }
+
+    /**
+     * @param changeFun the changeFun to set
+     */
+    public void setChangeFun(float changeFun) {
+        this.changeFun = changeFun;
+    }
 }

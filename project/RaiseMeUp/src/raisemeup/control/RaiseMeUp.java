@@ -55,12 +55,12 @@ public class RaiseMeUp {
     
     
     private static User currentUser;
+	private static Pet currentPet;
+	
+	private static float timeModifier=(float)0.05;
     
     public static void init() {
         if(getLogin()==null) setLogin(new Login());
-        //if(getRegister()==null) setRegister(new Register());
-        //if(getPetWindow()==null) setPetWindow(new PetWindow());
-        //if(getErrorMessage()==null) setErrorMessage(new ErrorMessage(""));
         
         if(getDao()==null) try {
             setDao(new DAO());
@@ -181,6 +181,9 @@ public class RaiseMeUp {
         } catch (SQLException ex) {
             Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Cannot add pet to the database!", ex);
         }
+        petWindow = new PetWindow(newPet);
+        getPetCreator().setVisible(false);
+        petWindow.setVisible(true);
     }
     
     public static boolean newFood (Food f){
@@ -486,6 +489,16 @@ public class RaiseMeUp {
         return true;
     }
     
+    public static boolean doesPetExist(String petname) {
+        PetBuilder pb = new PetBuilder().setName(petname).setOwner(currentUser.getId());
+        try {
+            return dao.checkIfPetExists(pb.createPet());
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, "Cannot check if pet already exists!", ex);
+        }
+        return true;
+    }
+    
     public static void login(String username, String password) {
         boolean loggedin=false;
         Map<Integer,User> users = new HashMap<Integer, User>();
@@ -509,12 +522,9 @@ public class RaiseMeUp {
                 if(user.getValue().getUsername().equals(username) && user.getValue().getPassword().equals(password)) {
                     setCurrentUser(user.getValue());
                     loggedin=true;
-                    petCreator = new PetCreator();
+                    setPetChooser(new PetChooser());
                     login.setVisible(false);
-                    petCreator.setVisible(true);
-                    /*petWindow = new PetWindow();
-                    login.setVisible(false);
-                    petWindow.setVisible(true);*/
+                    getPetChooser().setVisible(true);
                 }
             }
         }
@@ -667,6 +677,84 @@ public class RaiseMeUp {
         adminPetsJobs = aAdminPetsJobs;
     }
     
+    /**
+     * @return the petCreator
+     */
+    public static PetCreator getPetCreator() {
+        return petCreator;
+    }
+
+    /**
+     * @param aPetCreator the petCreator to set
+     */
+    public static void setPetCreator(PetCreator aPetCreator) {
+        petCreator = aPetCreator;
+    }
+
+    /**
+     * @return the petChooser
+     */
+    public static PetChooser getPetChooser() {
+        return petChooser;
+    }
+
+    /**
+     * @param aPetChooser the petChooser to set
+     */
+    public static void setPetChooser(PetChooser aPetChooser) {
+        petChooser = aPetChooser;
+    }
+
+    /**
+     * @return the currentPet
+     */
+    public static Pet getCurrentPet() {
+        return currentPet;
+    }
+
+    /**
+     * @param aCurrentPet the currentPet to set
+     */
+    public static void setCurrentPet(Pet aCurrentPet) {
+        currentPet = aCurrentPet;
+    }
+
+    /**
+     * @return the timeModifier
+     */
+    public static float getTimeModifier() {
+        return timeModifier;
+    }
+
+    /**
+     * @param aTimeModifier the timeModifier to set
+     */
+    public static void setTimeModifier(float aTimeModifier) {
+        timeModifier = aTimeModifier;
+    }
+    
+    public static void petLeaves() {
+        petWindow.petLeaves();
+        RaiseMeUp.setErrorMessage(new ErrorMessage("You have been a bad master, " + currentPet.getName() + " left you."));
+        RaiseMeUp.getErrorMessage().setVisible(true);
+        try {
+            dao.delPet(currentPet);
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void deletePet(Pet pet) {
+        try {
+            dao.delPet(pet);
+        } catch (SQLException ex) {
+            Logger.getLogger(RaiseMeUp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void modifyPet() {
+        
+    }
     
     
     

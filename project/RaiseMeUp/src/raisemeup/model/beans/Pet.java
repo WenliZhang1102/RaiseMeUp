@@ -52,7 +52,12 @@ public class Pet {
     }
 
     
-    
+    public int getEmotion() {
+        int avg = (hunger+energy+fun+hygiene)/4;
+        if(avg<30 || hunger==0 || energy==0 || fun==0 || hygiene==0) return 0;
+        if(avg<60) return 1;
+        else return 2;
+    }
 
     /**
      * @return the name
