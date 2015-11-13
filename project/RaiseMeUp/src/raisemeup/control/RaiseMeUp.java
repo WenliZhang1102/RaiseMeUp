@@ -26,6 +26,7 @@ import raisemeup.view.AdminUpgrades;
 import raisemeup.view.AdminUsers;
 import raisemeup.view.AdminWindow;
 import raisemeup.view.ErrorMessage;
+import raisemeup.view.JobsWindow;
 import raisemeup.view.Login;
 import raisemeup.view.PetChooser;
 import raisemeup.view.PetCreator;
@@ -54,9 +55,27 @@ public class RaiseMeUp {
     private static AdminJobs adminJobs;
     private static AdminPetsJobs adminPetsJobs;
     private static AdminTiming adminTiming;
+    private static JobsWindow jobsWindow;
     
     private static User currentUser;
     private static Pet currentPet;
+
+    /**
+     * @return the currentJob
+     */
+    public static Job getCurrentJob() {
+        return currentJob;
+    }
+
+    /**
+     * @param aCurrentJob the currentJob to set
+     */
+    public static void setCurrentJob(Job aCurrentJob) {
+        currentJob = aCurrentJob;
+    }
+    
+    private boolean onJob=false;
+    private static Job currentJob;
 	
     private static float timeModifier=(float)0.05;// ha 1, akkor  1 perc 1 ora 0.05 *600
     
@@ -124,6 +143,30 @@ public class RaiseMeUp {
                 resizedImage = new BufferedImage((int)(scale*maxSize), maxSize, type);
                 Graphics2D g = resizedImage.createGraphics();
                 g.drawImage(originalImage, 0, 0, (int)(scale*maxSize), maxSize, null);
+                g.dispose();
+            }
+            return resizedImage;
+        }
+        else return originalImage;
+    }
+    
+    public static BufferedImage resizeImage(BufferedImage originalImage, int type, int maxWidth, int maxHeight)
+    {
+        if(originalImage.getWidth()>maxWidth || originalImage.getHeight()>maxHeight) {
+            double scale;
+            BufferedImage resizedImage;
+            if(originalImage.getWidth()>originalImage.getHeight()) {
+                scale=(double)originalImage.getHeight()/originalImage.getWidth();
+                resizedImage = new BufferedImage(maxWidth, (int)(scale*maxWidth), type);
+                Graphics2D g = resizedImage.createGraphics();
+                g.drawImage(originalImage, 0, 0, maxWidth, (int)(scale*maxWidth), null);
+                g.dispose();
+            }
+            else {
+                scale=(double)originalImage.getWidth()/originalImage.getHeight();
+                resizedImage = new BufferedImage((int)(scale*maxHeight), maxHeight, type);
+                Graphics2D g = resizedImage.createGraphics();
+                g.drawImage(originalImage, 0, 0, (int)(scale*maxHeight), maxHeight, null);
                 g.dispose();
             }
             return resizedImage;
@@ -736,6 +779,7 @@ public class RaiseMeUp {
     
     public static void petLeaves() {
         petWindow.petLeaves();
+        RaiseMeUp.getJobsWindow().setVisible(false);
         RaiseMeUp.setErrorMessage(new ErrorMessage("You have been a bad master, " + currentPet.getName() + " left you."));
         RaiseMeUp.getErrorMessage().setVisible(true);
         try {
@@ -769,6 +813,34 @@ public class RaiseMeUp {
      */
     public static void setAdminTiming(AdminTiming aAdminTiming) {
         adminTiming = aAdminTiming;
+    }
+
+    /**
+     * @return the jobsWindow
+     */
+    public static JobsWindow getJobsWindow() {
+        return jobsWindow;
+    }
+
+    /**
+     * @param aJobsWindow the jobsWindow to set
+     */
+    public static void setJobsWindow(JobsWindow aJobsWindow) {
+        jobsWindow = aJobsWindow;
+    }
+
+    /**
+     * @return the onJob
+     */
+    public boolean isOnJob() {
+        return onJob;
+    }
+
+    /**
+     * @param onJob the onJob to set
+     */
+    public void setOnJob(boolean onJob) {
+        this.onJob = onJob;
     }
     
     

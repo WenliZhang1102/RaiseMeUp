@@ -7,10 +7,16 @@ package raisemeup.view;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneLayout;
+import raisemeup.control.RaiseMeUp;
+import raisemeup.model.beans.Job;
 
 /**
  *
@@ -27,21 +33,25 @@ public class JobsWindow extends javax.swing.JFrame {
     }
     
     private void myInit() {
-        JPanel panJobs = new JPanel();
+        panJobs.setLayout(new GridLayout());
         
-        panJobs.setLayout(new GridLayout(0, 1));
-        
-        
-        for(int i=0; i<10; i++) {
-            PanJobElement element = new PanJobElement();
-            panJobs.add(element);
-            panJobs.setPreferredSize(new Dimension(panJobs.getPreferredSize().width, panJobs.getPreferredSize().height + 229));
-            
+        Map<Integer, Job> jobs = new HashMap<>();
+        jobs = RaiseMeUp.listJobs();
+        List<Job> currentjobs = new ArrayList();
+        for(Map.Entry<Integer, Job> pet : jobs.entrySet()) {
+            if(pet.getValue().getSpecies().equals(RaiseMeUp.getCurrentPet().getType())) {
+                currentjobs.add(pet.getValue());
+            }
         }
         
-        scpJobs.add(panJobs);
-        this.repaint();
-        this.revalidate();
+        for(int i=0; i<currentjobs.size(); i++) {
+            PanJobElement element = new PanJobElement(currentjobs.get(i));
+            panJobs.add(element);
+            element.setLocation(i*240, 0);
+        }
+        
+        panJobs.repaint();
+        panJobs.revalidate();
     }
 
     /**
@@ -55,6 +65,7 @@ public class JobsWindow extends javax.swing.JFrame {
 
         butBack = new javax.swing.JButton();
         scpJobs = new javax.swing.JScrollPane();
+        panJobs = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Jobs");
@@ -62,8 +73,26 @@ public class JobsWindow extends javax.swing.JFrame {
         butBack.setFont(new java.awt.Font("Hobo Std", 0, 14)); // NOI18N
         butBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/BackButton.png"))); // NOI18N
         butBack.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        butBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                butBackActionPerformed(evt);
+            }
+        });
 
         scpJobs.setAutoscrolls(true);
+
+        javax.swing.GroupLayout panJobsLayout = new javax.swing.GroupLayout(panJobs);
+        panJobs.setLayout(panJobsLayout);
+        panJobsLayout.setHorizontalGroup(
+            panJobsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 288, Short.MAX_VALUE)
+        );
+        panJobsLayout.setVerticalGroup(
+            panJobsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 506, Short.MAX_VALUE)
+        );
+
+        scpJobs.setViewportView(panJobs);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -73,14 +102,16 @@ public class JobsWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(butBack, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(scpJobs, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(scpJobs, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scpJobs, javax.swing.GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE)
+                .addComponent(scpJobs, javax.swing.GroupLayout.DEFAULT_SIZE, 508, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(butBack, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -88,6 +119,10 @@ public class JobsWindow extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void butBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butBackActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_butBackActionPerformed
 
     /**
      * @param args the command line arguments
@@ -126,6 +161,7 @@ public class JobsWindow extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton butBack;
+    private javax.swing.JPanel panJobs;
     private javax.swing.JScrollPane scpJobs;
     // End of variables declaration//GEN-END:variables
 }

@@ -68,8 +68,7 @@ public class PetWindow extends javax.swing.JFrame {
         pbFun = new javax.swing.JProgressBar();
         lblHunger3 = new javax.swing.JLabel();
         pbHygiene = new javax.swing.JProgressBar();
-        lblMoney = new javax.swing.JLabel();
-        lblCoinIcon = new javax.swing.JLabel();
+        butMarket1 = new javax.swing.JButton();
         panPetDisplay = new javax.swing.JPanel();
         lblEmotionDislpay = new javax.swing.JLabel();
         lblPetDisplay = new javax.swing.JLabel();
@@ -80,6 +79,8 @@ public class PetWindow extends javax.swing.JFrame {
         lblDAR = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         butMarket = new javax.swing.JButton();
+        lblMoney = new javax.swing.JLabel();
+        lblCoinIcon = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         butExit = new javax.swing.JButton();
         lblUserIcon = new javax.swing.JLabel();
@@ -119,8 +120,14 @@ public class PetWindow extends javax.swing.JFrame {
         pbHygiene.setValue(40);
         pbHygiene.setStringPainted(true);
 
-        lblMoney.setFont(new java.awt.Font("Hobo Std", 2, 14)); // NOI18N
-        lblMoney.setText("Money:");
+        butMarket1.setFont(new java.awt.Font("Hobo Std", 0, 14)); // NOI18N
+        butMarket1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/JobsButton.png"))); // NOI18N
+        butMarket1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        butMarket1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                butMarket1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panStatsLayout = new javax.swing.GroupLayout(panStats);
         panStats.setLayout(panStatsLayout);
@@ -152,9 +159,7 @@ public class PetWindow extends javax.swing.JFrame {
                                 .addComponent(pbHygiene, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panStatsLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(lblMoney)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblCoinIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(butMarket1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         panStatsLayout.setVerticalGroup(
@@ -179,13 +184,8 @@ public class PetWindow extends javax.swing.JFrame {
                             .addComponent(lblHunger1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(pbEnergy, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panStatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panStatsLayout.createSequentialGroup()
-                        .addComponent(lblCoinIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(panStatsLayout.createSequentialGroup()
-                        .addComponent(lblMoney, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(20, 20, 20))))
+                .addComponent(butMarket1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         panPetDisplay.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -258,19 +258,34 @@ public class PetWindow extends javax.swing.JFrame {
             }
         });
 
+        lblMoney.setFont(new java.awt.Font("Hobo Std", 2, 14)); // NOI18N
+        lblMoney.setText("Money:");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(butMarket, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(butMarket, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(lblMoney, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblCoinIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(lblMoney, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(300, 300, 300))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(lblCoinIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(butMarket, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -414,6 +429,8 @@ public class PetWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_butExitActionPerformed
 
     private void butLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butLogoutActionPerformed
+        stopObserving();
+        RaiseMeUp.getJobsWindow().setVisible(false);
         RaiseMeUp.setCurrentUser(new User(0, "", "", ""));
         RaiseMeUp.setLogin(new Login());
         this.setVisible(false);
@@ -430,6 +447,12 @@ public class PetWindow extends javax.swing.JFrame {
         this.setVisible(false);
         RaiseMeUp.getPetChooser().setVisible(true);
     }//GEN-LAST:event_butBackActionPerformed
+
+    private void butMarket1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butMarket1ActionPerformed
+        RaiseMeUp.getJobsWindow().setVisible(false);
+        RaiseMeUp.setJobsWindow(new JobsWindow());
+        RaiseMeUp.getJobsWindow().setVisible(true);
+    }//GEN-LAST:event_butMarket1ActionPerformed
 
     private void myInit() {
         //UserIcon
@@ -668,6 +691,7 @@ public class PetWindow extends javax.swing.JFrame {
     private javax.swing.JButton butExit;
     private javax.swing.JButton butLogout;
     private javax.swing.JButton butMarket;
+    private javax.swing.JButton butMarket1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JLabel lblCoinIcon;

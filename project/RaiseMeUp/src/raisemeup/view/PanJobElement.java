@@ -5,21 +5,50 @@
  */
 package raisemeup.view;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import raisemeup.control.RaiseMeUp;
+import raisemeup.model.beans.Job;
+
 /**
  *
  * @author Andras
  */
 public class PanJobElement extends javax.swing.JPanel {
 
+    private Job job;
+    
     /**
      * Creates new form PanJobElement
      */
-    public PanJobElement() {
+    public PanJobElement(Job job) {
         initComponents();
+        this.job=job;
+        myInit();
     }
 
     private void myInit() {
         
+        lblJobName.setText(job.getTitle());
+        lblClient.setText("Client: " + job.getClient());
+        lblLength.setText("Length: " + job.getLength() + " min");
+        lblReward.setText("Reward: " + job.getReward());
+        txaMessage.setLineWrap(true);
+        txaMessage.setText("Message:\n" + job.getMessage());
+        
+        BufferedImage image=null;
+        try {
+            image = ImageIO.read(getClass().getResource("/images/" + job.getImage()));
+        } catch (IOException ex) {
+            Logger.getLogger(PetWindow.class.getName()).log(Level.SEVERE, "Cannot load Job!", ex);
+            return;
+        }
+        image = RaiseMeUp.resizeImage(image, image.getType(), 214, 150);
+        lblJobDisplay.setIcon(new ImageIcon(image));
     }
     
     /**
@@ -31,18 +60,52 @@ public class PanJobElement extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblJobName = new javax.swing.JLabel();
+        lblJobDisplay = new javax.swing.JLabel();
+        lblClient = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txaMessage = new javax.swing.JTextArea();
+        lblReward = new javax.swing.JLabel();
+        lblLength = new javax.swing.JLabel();
+        butBack = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 234, 0));
         setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 226, 47), new java.awt.Color(255, 248, 119), new java.awt.Color(255, 204, 0), new java.awt.Color(255, 204, 0)));
 
-        jLabel1.setFont(new java.awt.Font("Hobo Std", 0, 24)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Job");
+        lblJobName.setFont(new java.awt.Font("Hobo Std", 0, 24)); // NOI18N
+        lblJobName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblJobName.setText("Job");
 
-        jLabel2.setFont(new java.awt.Font("Hobo Std", 0, 24)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblJobDisplay.setFont(new java.awt.Font("Hobo Std", 0, 24)); // NOI18N
+        lblJobDisplay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        lblClient.setFont(new java.awt.Font("Hobo Std", 0, 14)); // NOI18N
+        lblClient.setText("Client: ");
+
+        txaMessage.setEditable(false);
+        txaMessage.setBackground(new java.awt.Color(255, 233, 54));
+        txaMessage.setColumns(20);
+        txaMessage.setFont(new java.awt.Font("Hobo Std", 0, 12)); // NOI18N
+        txaMessage.setRows(5);
+        txaMessage.setWrapStyleWord(true);
+        txaMessage.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jScrollPane1.setViewportView(txaMessage);
+
+        lblReward.setFont(new java.awt.Font("Hobo Std", 0, 14)); // NOI18N
+        lblReward.setText("Reward: ");
+
+        lblLength.setFont(new java.awt.Font("Hobo Std", 0, 14)); // NOI18N
+        lblLength.setText("Length: ");
+
+        butBack.setBackground(new java.awt.Color(255, 255, 102));
+        butBack.setFont(new java.awt.Font("Hobo Std", 0, 14)); // NOI18N
+        butBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/TakeButton.png"))); // NOI18N
+        butBack.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        butBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                butBackActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -51,24 +114,55 @@ public class PanJobElement extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 502, Short.MAX_VALUE))
+                    .addComponent(lblJobName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblJobDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
+                    .addComponent(lblClient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(lblReward, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblLength, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(butBack, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblJobName, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addComponent(lblJobDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblClient, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblReward, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblLength, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(54, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGap(0, 424, Short.MAX_VALUE)
+                    .addComponent(butBack, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void butBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butBackActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_butBackActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton butBack;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblClient;
+    private javax.swing.JLabel lblJobDisplay;
+    private javax.swing.JLabel lblJobName;
+    private javax.swing.JLabel lblLength;
+    private javax.swing.JLabel lblReward;
+    private javax.swing.JTextArea txaMessage;
     // End of variables declaration//GEN-END:variables
 }
