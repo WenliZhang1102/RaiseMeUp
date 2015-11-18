@@ -50,7 +50,7 @@ public class DAO {
     private static final String SQL_delPet = "delete from Pet where userid = ? and name = ?";
     private static final String SQL_listPets = "select * from Pet";
     private static final String SQL_updatePet = 
-                "UPDATE Pet SET hunger = ?, energy = ?, fun = ?, hygiene = ?, money = ?, image = ? WHERE name = ? AND userid = ?";
+                "UPDATE Pet SET hunger = ?, energy = ?, fun = ?, hygiene = ?, money = ?, age=?, image = ? WHERE name = ? AND userid = ?";
 
     private static final String SQL_addPetsFoods = "insert into FoodOwned (petid, foodid, piece) values (?, ?, ?)";
     private static final String SQL_updatePetsFoods = "update FoodOwned set piece = ? where petid = ? and foodid = ?";
@@ -621,6 +621,7 @@ public class DAO {
                         pst.setInt(index++, p.getFun());
                         pst.setInt(index++, p.getHygiene());
                         pst.setInt(index++, p.getMoney());
+                        pst.setInt(index++, p.getAge());
                         pst.setString(index++, p.getImage());
                         pst.setString(index++, p.getName());
                         pst.setInt(index++, p.getOwner());

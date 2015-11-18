@@ -62,6 +62,7 @@ public class PetChooser extends javax.swing.JFrame {
         butCreateNewPet = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         panPets = new javax.swing.JPanel();
+        butSettings = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Pet Chooser");
@@ -98,19 +99,30 @@ public class PetChooser extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(panPets);
 
+        butSettings.setFont(new java.awt.Font("Hobo Std", 0, 14)); // NOI18N
+        butSettings.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/SettingsButton.png"))); // NOI18N
+        butSettings.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        butSettings.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                butSettingsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(butBack, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(butCreateNewPet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(butSettings, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(butCreateNewPet))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,7 +132,8 @@ public class PetChooser extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(butBack, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(butCreateNewPet, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(butCreateNewPet, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(butSettings, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -138,6 +151,12 @@ public class PetChooser extends javax.swing.JFrame {
         this.setVisible(false);
         RaiseMeUp.getPetCreator().setVisible(true);
     }//GEN-LAST:event_butCreateNewPetActionPerformed
+
+    private void butSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butSettingsActionPerformed
+        RaiseMeUp.setUserSettings(new UserSettings());
+        this.setVisible(false);
+        RaiseMeUp.getUserSettings().setVisible(true);
+    }//GEN-LAST:event_butSettingsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -177,6 +196,7 @@ public class PetChooser extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton butBack;
     private javax.swing.JButton butCreateNewPet;
+    private javax.swing.JButton butSettings;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel panPets;
     // End of variables declaration//GEN-END:variables

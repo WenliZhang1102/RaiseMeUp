@@ -8,11 +8,14 @@ package raisemeup.view;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import raisemeup.control.RaiseMeUp;
+import raisemeup.model.beans.Job;
 import raisemeup.model.beans.Pet;
 
 /**
@@ -22,6 +25,9 @@ import raisemeup.model.beans.Pet;
 public class PanPetElement extends javax.swing.JPanel {
 
     Pet pet;
+    boolean hasjob=false;
+    Job job=null;
+    int progress;
     
     /**
      * Creates new form PanPetElement
@@ -46,6 +52,16 @@ public class PanPetElement extends javax.swing.JPanel {
         else if(pet.getEmotion()==1) lblPetDisplay.setBackground(new Color(255,255,153));
         else lblPetDisplay.setBackground(new Color(255,51,51));
         lblPetDisplay.setOpaque(true);
+        
+        
+        for(Map.Entry<Job,Integer> j : pet.getOwnedjobs().entrySet()) {
+            hasjob=true;
+            job=j.getKey();
+            progress=j.getValue();
+        }
+        
+        if(hasjob) lblPetDisplay.setEnabled(false);
+        
     }
 
     /**
@@ -120,6 +136,12 @@ public class PanPetElement extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if(hasjob) {
+            RaiseMeUp.setCurrentJob(job);
+            RaiseMeUp.setJobprogress(progress);
+            RaiseMeUp.setOnJob(true);
+        }
+        
         RaiseMeUp.setPetWindow(new PetWindow(pet));
         RaiseMeUp.getPetChooser().setVisible(false);
         RaiseMeUp.getPetWindow().setVisible(true);

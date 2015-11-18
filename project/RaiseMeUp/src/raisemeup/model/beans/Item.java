@@ -3,11 +3,12 @@ package raisemeup.model.beans;
 /**
  * * * @author lekogabor
  */
-public class Item {
+public abstract class Item {
 
     private int id;
     private String name;
     private int price;
+    private String image;
 
     /**
      * * @return the id
@@ -49,5 +50,19 @@ public class Item {
      */
     public void setPrice(int price) {
         this.price = price;
+    }
+    
+    /**
+     * @return the image
+     */
+    public String getImage() {
+        return image;
+    }
+
+    /**
+     * @param image the image to set
+     */
+    public void setImage(String image) {
+        this.image = image;
     }
 }

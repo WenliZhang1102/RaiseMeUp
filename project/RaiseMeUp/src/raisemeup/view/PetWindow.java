@@ -5,22 +5,37 @@
  */
 package raisemeup.view;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.UIManager;
+import javax.swing.plaf.synth.SynthScrollBarUI;
 import raisemeup.control.RaiseMeUp;
 import raisemeup.model.PetObserver;
+import raisemeup.model.beans.Food;
+import raisemeup.model.beans.Item;
 import raisemeup.model.beans.User;
 import raisemeup.model.beans.Pet;
+import raisemeup.model.beans.Upgrade;
+import raisemeup.view.decorator.LeftUpgradeSlot;
+import raisemeup.view.decorator.RightUpgradeSlot;
+import raisemeup.view.decorator.Slot;
 
 /**
  *
@@ -29,6 +44,7 @@ import raisemeup.model.beans.Pet;
 public class PetWindow extends javax.swing.JFrame {
 
     private boolean isObserving;
+    private boolean isJobObserving;
     private float hungerModifier;
     private float energyModifier;
     private float funModifier;
@@ -38,6 +54,8 @@ public class PetWindow extends javax.swing.JFrame {
     private float changeHunger = 0;
     private float changeHygiene = 0;
     private float changeFun = 0;
+    
+    private float changeJob = 0;
     
     private Calendar currentTime= Calendar.getInstance();
     
@@ -68,19 +86,22 @@ public class PetWindow extends javax.swing.JFrame {
         pbFun = new javax.swing.JProgressBar();
         lblHunger3 = new javax.swing.JLabel();
         pbHygiene = new javax.swing.JProgressBar();
-        butMarket1 = new javax.swing.JButton();
+        butJobs = new javax.swing.JButton();
+        pbJob = new javax.swing.JProgressBar();
         panPetDisplay = new javax.swing.JPanel();
         lblEmotionDislpay = new javax.swing.JLabel();
         lblPetDisplay = new javax.swing.JLabel();
-        lblUpgrade1 = new javax.swing.JLabel();
-        lblUpgrade2 = new javax.swing.JLabel();
         lblPetName = new javax.swing.JLabel();
         lblDAL = new javax.swing.JLabel();
         lblDAR = new javax.swing.JLabel();
+        lblBG = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         butMarket = new javax.swing.JButton();
         lblMoney = new javax.swing.JLabel();
         lblCoinIcon = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        panMenu = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         butExit = new javax.swing.JButton();
         lblUserIcon = new javax.swing.JLabel();
@@ -120,14 +141,17 @@ public class PetWindow extends javax.swing.JFrame {
         pbHygiene.setValue(40);
         pbHygiene.setStringPainted(true);
 
-        butMarket1.setFont(new java.awt.Font("Hobo Std", 0, 14)); // NOI18N
-        butMarket1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/JobsButton.png"))); // NOI18N
-        butMarket1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        butMarket1.addActionListener(new java.awt.event.ActionListener() {
+        butJobs.setFont(new java.awt.Font("Hobo Std", 0, 14)); // NOI18N
+        butJobs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/JobsButton.png"))); // NOI18N
+        butJobs.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        butJobs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                butMarket1ActionPerformed(evt);
+                butJobsActionPerformed(evt);
             }
         });
+
+        pbJob.setString("Currently not on a job");
+        pbJob.setStringPainted(true);
 
         javax.swing.GroupLayout panStatsLayout = new javax.swing.GroupLayout(panStats);
         panStats.setLayout(panStatsLayout);
@@ -157,9 +181,10 @@ public class PetWindow extends javax.swing.JFrame {
                                 .addComponent(lblHunger3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(pbHygiene, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panStatsLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(butMarket1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(panStatsLayout.createSequentialGroup()
+                        .addComponent(pbJob, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(butJobs, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         panStatsLayout.setVerticalGroup(
@@ -184,7 +209,9 @@ public class PetWindow extends javax.swing.JFrame {
                             .addComponent(lblHunger1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(pbEnergy, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(butMarket1)
+                .addGroup(panStatsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pbJob, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(butJobs, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -217,13 +244,11 @@ public class PetWindow extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panPetDisplayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblEmotionDislpay, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panPetDisplayLayout.createSequentialGroup()
                         .addGap(17, 17, 17)
-                        .addComponent(lblUpgrade1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblUpgrade2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lblEmotionDislpay, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27))
+                        .addComponent(lblBG)))
+                .addGap(111, 111, 111))
         );
         panPetDisplayLayout.setVerticalGroup(
             panPetDisplayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,17 +257,16 @@ public class PetWindow extends javax.swing.JFrame {
                 .addGroup(panPetDisplayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panPetDisplayLayout.createSequentialGroup()
                         .addComponent(lblEmotionDislpay, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(44, 44, 44)
-                        .addGroup(panPetDisplayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblUpgrade1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblUpgrade2, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)))
+                        .addGap(24, 24, 24)
+                        .addComponent(lblBG)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(panPetDisplayLayout.createSequentialGroup()
                         .addComponent(lblPetName, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(panPetDisplayLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblDAL, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblDAR, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
                         .addComponent(lblPetDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -261,6 +285,32 @@ public class PetWindow extends javax.swing.JFrame {
         lblMoney.setFont(new java.awt.Font("Hobo Std", 2, 14)); // NOI18N
         lblMoney.setText("Money:");
 
+        javax.swing.GroupLayout panMenuLayout = new javax.swing.GroupLayout(panMenu);
+        panMenu.setLayout(panMenuLayout);
+        panMenuLayout.setHorizontalGroup(
+            panMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 138, Short.MAX_VALUE)
+        );
+        panMenuLayout.setVerticalGroup(
+            panMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 289, Short.MAX_VALUE)
+        );
+
+        jScrollPane1.setViewportView(panMenu);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -268,12 +318,13 @@ public class PetWindow extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(butMarket, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                    .addComponent(butMarket, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(lblMoney, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(lblCoinIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -281,11 +332,11 @@ public class PetWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(lblMoney, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(300, 300, 300))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(lblCoinIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(lblMoney, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
+                        .addGap(3, 3, 3))
+                    .addComponent(lblCoinIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(butMarket, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -430,7 +481,8 @@ public class PetWindow extends javax.swing.JFrame {
 
     private void butLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butLogoutActionPerformed
         stopObserving();
-        RaiseMeUp.getJobsWindow().setVisible(false);
+        if(RaiseMeUp.getJobsWindow()!=null) RaiseMeUp.getJobsWindow().setVisible(false);
+        if(RaiseMeUp.getMarketWindow()!=null) RaiseMeUp.getMarketWindow().setVisible(false);
         RaiseMeUp.setCurrentUser(new User(0, "", "", ""));
         RaiseMeUp.setLogin(new Login());
         this.setVisible(false);
@@ -438,23 +490,37 @@ public class PetWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_butLogoutActionPerformed
 
     private void butMarketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butMarketActionPerformed
-        // TODO add your handling code here:
+        RaiseMeUp.setMarketWindow(new MarketWindow());
+        RaiseMeUp.getMarketWindow().setVisible(true);
     }//GEN-LAST:event_butMarketActionPerformed
 
     private void butBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butBackActionPerformed
         stopObserving();
+        if(RaiseMeUp.getJobsWindow()!=null) RaiseMeUp.getJobsWindow().setVisible(false);
+        if(RaiseMeUp.getMarketWindow()!=null) RaiseMeUp.getMarketWindow().setVisible(false);
         RaiseMeUp.setPetChooser(new PetChooser());
         this.setVisible(false);
         RaiseMeUp.getPetChooser().setVisible(true);
     }//GEN-LAST:event_butBackActionPerformed
 
-    private void butMarket1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butMarket1ActionPerformed
-        RaiseMeUp.getJobsWindow().setVisible(false);
-        RaiseMeUp.setJobsWindow(new JobsWindow());
-        RaiseMeUp.getJobsWindow().setVisible(true);
-    }//GEN-LAST:event_butMarket1ActionPerformed
+    private void butJobsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butJobsActionPerformed
+        if(!RaiseMeUp.isOnJob()) {
+            RaiseMeUp.setJobsWindow(new JobsWindow());
+            RaiseMeUp.getJobsWindow().setVisible(true);
+        }
+        else {
+            RaiseMeUp.setOnJob(false);
+            RaiseMeUp.setJobprogress(0);
+            refreshPBJob();
+            quitJob();
+            RaiseMeUp.removeJobOwned(RaiseMeUp.getCurrentPet(), RaiseMeUp.getCurrentJob());
+        }
+    }//GEN-LAST:event_butJobsActionPerformed
 
     private void myInit() {
+        
+        this.setTitle("RaiseMeUp " + RaiseMeUp.getCurrentPet().getName());
+        
         //UserIcon
         BufferedImage image=null;
         try {
@@ -498,7 +564,42 @@ public class PetWindow extends javax.swing.JFrame {
         lblDAR.setLocation(lblPetName.getLocation().x+177, lblPetName.getLocation().y-5);
         lblPetName.setText(RaiseMeUp.getCurrentPet().getName());
         
+        
+        
+        
+        //Upgrade slots
+        refreshContent();
+        
+        refreshMenu();
+        
+        
         isObserving=true;
+        if(RaiseMeUp.isOnJob()) {
+            isJobObserving=true;
+            onJob();
+            refreshPBJob();
+        }
+        else {
+            isJobObserving=false;
+        }
+        
+        //Background
+        lblBG=new JLabel();
+        panPetDisplay.add(lblBG);
+        lblBG.setLocation(0, 0);
+        String bg;
+        if(RaiseMeUp.getCurrentPet().getType().equals("fish")) bg = "BackgroundAqua.png";
+        else if(RaiseMeUp.getCurrentPet().getType().equals("penguin")) bg = "BackgroundIce.png";
+        else bg = "BackgroundField.png";
+        try {
+            image = ImageIO.read(getClass().getResource("/images/" + bg));
+        } catch (IOException ex) {
+            Logger.getLogger(PetWindow.class.getName()).log(Level.SEVERE, "Cannot load Pet!", ex);
+        }
+        image = RaiseMeUp.resizeImage(image, image.getType(), 500, 430);
+        lblBG.setIcon(new ImageIcon(image));
+        lblBG.setSize(500, 430);
+        
         refreshPBEnergy();
         refreshPBFun();
         refreshPBHunger();
@@ -508,11 +609,10 @@ public class PetWindow extends javax.swing.JFrame {
         changeFun=0;
         changeHunger=0;
         changeHygiene=0;
+        changeJob=0;
         
-        hungerModifier=1;
-        funModifier=(float)0.7;
-        energyModifier=(float)0.6;
-        hygieneModifier=(float)0.35;
+        
+        
         
         currentTime.set(0, 0, 0, 0, 0, 0);
         
@@ -520,12 +620,145 @@ public class PetWindow extends javax.swing.JFrame {
         else lblPaceWords.setText((RaiseMeUp.getTimeModifier() * 60) + " seconds = 1 hour");
         refreshClock();
         
+        refreshUps();
+        
         this.repaint();
         this.revalidate();
         
         observeStats();
         
         
+    }
+    
+     
+    public void refreshUps() {
+        hungerModifier=(float)0.5;
+        funModifier=(float)0.5;
+        energyModifier=(float)0.5;
+        hygieneModifier=(float)0.5;
+        
+        List<Upgrade> upgrades = new ArrayList<>();
+        for(Map.Entry<Item,Integer> i : RaiseMeUp.getCurrentPet().getOwneditems().entrySet()) {
+            if(i.getKey() instanceof Upgrade) {
+                upgrades.add((Upgrade)i.getKey());
+            }
+        }
+        for(Upgrade u : upgrades) {
+            
+            
+            if(u.getProperty().equals("hygiene")) hygieneModifier -= (hygieneModifier/100) * u.getValue();
+            if(hygieneModifier==0) RaiseMeUp.getCurrentPet().setHygiene(100);
+            if(u.getProperty().equals("hunger")) hungerModifier -= (hungerModifier/100) * u.getValue();
+            if(u.getProperty().equals("energy")) energyModifier -= (energyModifier/100) * u.getValue();
+            if(u.getProperty().equals("fun")) funModifier -= (funModifier/100) * u.getValue();
+        }
+    }
+    
+    public void refreshContent() {
+        panPetDisplay.removeAll();
+        
+        panPetDisplay.add(lblPetDisplay);
+        panPetDisplay.add(lblDAL);
+        panPetDisplay.add(lblDAR);
+        panPetDisplay.add(lblPetName);
+        panPetDisplay.add(lblEmotionDislpay);
+        
+        
+        BufferedImage image=null;
+        List<Upgrade> upgrades = new ArrayList<>();
+        for(Map.Entry<Item,Integer> item : RaiseMeUp.getCurrentPet().getOwneditems().entrySet()) {
+            if(item.getKey() instanceof Upgrade) {
+                upgrades.add((Upgrade)item.getKey());
+            }
+        }
+        if(upgrades.size()>=1) {
+            try {
+                image = ImageIO.read(getClass().getResource("/images/" + upgrades.get(0).getImage()));
+            } catch (IOException ex) {
+                Logger.getLogger(PetWindow.class.getName()).log(Level.SEVERE, "Cannot load Upgrade image!", ex);
+            }
+            image = RaiseMeUp.resizeImage(image, image.getType(), 120, 153);
+            
+            Slot left = new Slot(new ImageIcon(image));
+            left = new LeftUpgradeSlot(left);
+            displayUpgrades(left);
+            
+            
+        }
+        if(upgrades.size()>=2) {
+            try {
+                image = ImageIO.read(getClass().getResource("/images/" + upgrades.get(1).getImage()));
+            } catch (IOException ex) {
+                Logger.getLogger(PetWindow.class.getName()).log(Level.SEVERE, "Cannot load Upgrade image!", ex);
+            }
+            image = RaiseMeUp.resizeImage(image, image.getType(), 120, 153);
+            
+            Slot right = new Slot(new ImageIcon(image));
+            right = new RightUpgradeSlot(right);
+            displayUpgrades(right);
+        }
+        
+        panPetDisplay.add(lblBG);
+        
+        panPetDisplay.repaint();
+        panPetDisplay.revalidate();
+    }
+    
+    public void displayUpgrades(Slot slot) {
+        JLabel lbl = new JLabel(slot.getIcon());
+        panPetDisplay.add(lbl);
+        lbl.setIcon(slot.getIcon());
+        lbl.setLocation(slot.getXloc(), slot.getYloc());
+        lbl.setSize(slot.getXsize(),slot.getYsize());
+        
+        panPetDisplay.repaint();
+        panPetDisplay.revalidate();
+    }
+    
+    public void refreshMenu() {
+        panMenu.setPreferredSize(new Dimension(0,100));
+        panMenu.removeAll();
+        panMenu.setLayout(new GridLayout(0,1));
+        
+        List<Upgrade> upgrades = new ArrayList<>();
+        Map<Food,Integer> food = new HashMap<Food, Integer>();
+        for(Map.Entry<Item,Integer> i : RaiseMeUp.getCurrentPet().getOwneditems().entrySet()) {
+            if(i.getKey() instanceof Upgrade) {
+                upgrades.add((Upgrade)i.getKey());
+            }
+            else if(i.getKey() instanceof Food){
+                food.put((Food)i.getKey(), i.getValue());
+            }
+        }
+        
+        int val=0;
+        
+        for(Upgrade u : upgrades) {
+            UpgradeItem ui = new UpgradeItem(u);
+            panMenu.add(ui);
+            ui.setLocation(0, val);
+            val+=63;
+            panMenu.setPreferredSize(new Dimension((int) panMenu.getPreferredSize().getWidth(),
+                    (int)(panMenu.getPreferredSize().getHeight()+63)));
+        }
+        
+        for(Map.Entry<Food,Integer> f : food.entrySet()) {
+            FoodItem ui = new FoodItem(f.getKey(),f.getValue());
+            panMenu.add(ui);
+            ui.setLocation(0, val);
+            val+=93;
+            panMenu.setPreferredSize(new Dimension((int) panMenu.getPreferredSize().getWidth(),
+                    (int)(panMenu.getPreferredSize().getHeight()+93)));
+        }
+        
+        panMenu.repaint();
+        panMenu.revalidate();
+    }
+    
+    public void refreshMoney() {
+        lblMoney.setText("Money:" + RaiseMeUp.getCurrentPet().getMoney());
+        panMenu.repaint();
+        panMenu.revalidate();
     }
     
     public void refreshPBHunger() {
@@ -548,6 +781,13 @@ public class PetWindow extends javax.swing.JFrame {
     
     public void refreshPBEnergy() {
         pbEnergy.setValue(RaiseMeUp.getCurrentPet().getEnergy());
+        panStats.repaint();
+        panStats.revalidate();
+    }
+    
+    public void refreshPBJob() {
+        pbJob.setMaximum(RaiseMeUp.getCurrentJob().getLength());
+        pbJob.setValue(RaiseMeUp.getJobprogress());
         panStats.repaint();
         panStats.revalidate();
     }
@@ -597,20 +837,30 @@ public class PetWindow extends javax.swing.JFrame {
 
             @Override
             public void run() {
-                if(isObserving) {
+                if(isObserving || isJobObserving) {
                     currentTime.add(Calendar.MINUTE, 1);
                     refreshClock();
                 }
+                if(isJobObserving) {
+                    RaiseMeUp.setJobprogress(RaiseMeUp.getJobprogress()+1);
+                    observer.update();
+                }
+                
             }
         }, (int)(RaiseMeUp.getTimeModifier() * 1000), (int)(RaiseMeUp.getTimeModifier() * 1000));
     }
     
     private void stopObserving() {
         isObserving=false;
+        isJobObserving=false;
     }
     
     private void refreshClock() {
         lblTime.setText(((currentTime.getTime().getHours()<10)?"0":"") + currentTime.getTime().getHours() + " : " + ((currentTime.getTime().getMinutes()<10)?"0":"") + currentTime.getTime().getMinutes());
+        if(currentTime.getTime().getHours()==23 && currentTime.getTime().getMinutes()==59) {
+                        RaiseMeUp.getCurrentPet().setAge(RaiseMeUp.getCurrentPet().getAge()+1);
+                        RaiseMeUp.updatePet(RaiseMeUp.getCurrentPet());
+                }
         panTime.repaint();
         panTime.revalidate();
     }
@@ -651,6 +901,79 @@ public class PetWindow extends javax.swing.JFrame {
         }, (int)(RaiseMeUp.getTimeModifier() * 100), (int)(RaiseMeUp.getTimeModifier() * 100));
     }
     
+    public void onJob() {
+        BufferedImage image=null;
+        try {
+            image = ImageIO.read(getClass().getResource("/images/CancelButton.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(PetWindow.class.getName()).log(Level.SEVERE, "Cannot load Cancel image!", ex);
+            return;
+        }
+        image = RaiseMeUp.resizeImage(image, image.getType(), 81, 41);
+        butJobs.setIcon(new ImageIcon(image));
+        
+        butMarket.setEnabled(false);
+        pbHunger.setEnabled(false);
+        pbFun.setEnabled(false);
+        pbHygiene.setEnabled(false);
+        pbEnergy.setEnabled(false);
+        
+        lblPetDisplay.setEnabled(false);
+        lblEmotionDislpay.setEnabled(false);
+        lblHunger.setEnabled(false);
+        lblHunger1.setEnabled(false);
+        lblHunger2.setEnabled(false);
+        lblHunger3.setEnabled(false);
+        lblMoney.setEnabled(false);
+        lblCoinIcon.setEnabled(false);
+        
+        
+        pbJob.setString(RaiseMeUp.getCurrentJob().getTitle());
+        
+        isJobObserving=true;
+        RaiseMeUp.setOnJob(true);
+        
+        this.repaint();
+        this.revalidate();
+    }
+    
+    public void quitJob() {
+        BufferedImage image=null;
+        try {
+            image = ImageIO.read(getClass().getResource("/images/JobsButton.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(PetWindow.class.getName()).log(Level.SEVERE, "Cannot load Jobs image!", ex);
+            return;
+        }
+        image = RaiseMeUp.resizeImage(image, image.getType(), 81, 41);
+        butJobs.setIcon(new ImageIcon(image));
+        
+        butMarket.setEnabled(true);
+        pbHunger.setEnabled(true);
+        pbFun.setEnabled(true);
+        pbHygiene.setEnabled(true);
+        pbEnergy.setEnabled(true);
+        
+        lblPetDisplay.setEnabled(true);
+        lblEmotionDislpay.setEnabled(true);
+        lblHunger.setEnabled(true);
+        lblHunger1.setEnabled(true);
+        lblHunger2.setEnabled(true);
+        lblHunger3.setEnabled(true);
+        lblMoney.setEnabled(true);
+        lblMoney.setText("Money:" + RaiseMeUp.getCurrentPet().getMoney());
+        lblCoinIcon.setEnabled(true);
+        
+        isJobObserving=false;
+        
+        RaiseMeUp.setOnJob(false);
+        
+        pbJob.setString("Currently not on a job");
+        
+        this.repaint();
+        this.revalidate();
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -689,11 +1012,14 @@ public class PetWindow extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton butBack;
     private javax.swing.JButton butExit;
+    private javax.swing.JButton butJobs;
     private javax.swing.JButton butLogout;
     private javax.swing.JButton butMarket;
-    private javax.swing.JButton butMarket1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblBG;
     private javax.swing.JLabel lblCoinIcon;
     private javax.swing.JLabel lblDAL;
     private javax.swing.JLabel lblDAR;
@@ -708,9 +1034,8 @@ public class PetWindow extends javax.swing.JFrame {
     private javax.swing.JLabel lblPetDisplay;
     private javax.swing.JLabel lblPetName;
     private javax.swing.JLabel lblTime;
-    private javax.swing.JLabel lblUpgrade1;
-    private javax.swing.JLabel lblUpgrade2;
     private javax.swing.JLabel lblUserIcon;
+    private javax.swing.JPanel panMenu;
     private javax.swing.JPanel panPetDisplay;
     private javax.swing.JPanel panStats;
     private javax.swing.JPanel panTime;
@@ -718,6 +1043,7 @@ public class PetWindow extends javax.swing.JFrame {
     private javax.swing.JProgressBar pbFun;
     private javax.swing.JProgressBar pbHunger;
     private javax.swing.JProgressBar pbHygiene;
+    private javax.swing.JProgressBar pbJob;
     // End of variables declaration//GEN-END:variables
 
     /**

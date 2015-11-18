@@ -26,12 +26,15 @@ import raisemeup.view.AdminUpgrades;
 import raisemeup.view.AdminUsers;
 import raisemeup.view.AdminWindow;
 import raisemeup.view.ErrorMessage;
+import raisemeup.view.JobDone;
 import raisemeup.view.JobsWindow;
 import raisemeup.view.Login;
+import raisemeup.view.MarketWindow;
 import raisemeup.view.PetChooser;
 import raisemeup.view.PetCreator;
 import raisemeup.view.PetWindow;
 import raisemeup.view.Register;
+import raisemeup.view.UserSettings;
 
 /**
  *
@@ -56,6 +59,9 @@ public class RaiseMeUp {
     private static AdminPetsJobs adminPetsJobs;
     private static AdminTiming adminTiming;
     private static JobsWindow jobsWindow;
+    private static JobDone jobDone;
+    private static MarketWindow marketWindow;
+    private static UserSettings userSettings;
     
     private static User currentUser;
     private static Pet currentPet;
@@ -74,13 +80,15 @@ public class RaiseMeUp {
         currentJob = aCurrentJob;
     }
     
-    private boolean onJob=false;
+    private static boolean onJob=false;
     private static Job currentJob;
+    private static int jobprogress;
 	
-    private static float timeModifier=(float)0.05;// ha 1, akkor  1 perc 1 ora 0.05 *600
+    private static float timeModifier=(float)0.06;// ha 1, akkor  1 perc 1 ora 0.05 *600
     
     public static void init() {
         if(getLogin()==null) setLogin(new Login());
+        if(getJobDone()==null) setJobDone(new JobDone());
         
         if(getDao()==null) try {
             setDao(new DAO());
@@ -523,6 +531,7 @@ public class RaiseMeUp {
     }
     
     
+    
     public static boolean doesUserExist(String username) {
         UserBuilder ub = new UserBuilder().setUsername(username);
         try {
@@ -779,7 +788,8 @@ public class RaiseMeUp {
     
     public static void petLeaves() {
         petWindow.petLeaves();
-        RaiseMeUp.getJobsWindow().setVisible(false);
+        if(RaiseMeUp.getJobsWindow()!=null) RaiseMeUp.getJobsWindow().setVisible(false);
+        if(RaiseMeUp.getMarketWindow()!=null) RaiseMeUp.getMarketWindow().setVisible(false);
         RaiseMeUp.setErrorMessage(new ErrorMessage("You have been a bad master, " + currentPet.getName() + " left you."));
         RaiseMeUp.getErrorMessage().setVisible(true);
         try {
@@ -832,17 +842,72 @@ public class RaiseMeUp {
     /**
      * @return the onJob
      */
-    public boolean isOnJob() {
+    public static boolean isOnJob() {
         return onJob;
     }
 
     /**
-     * @param onJob the onJob to set
+     * @param aOnJob the onJob to set
      */
-    public void setOnJob(boolean onJob) {
-        this.onJob = onJob;
+    public static void setOnJob(boolean aOnJob) {
+        onJob = aOnJob;
     }
-    
+
+    /**
+     * @return the jobprogress
+     */
+    public static int getJobprogress() {
+        return jobprogress;
+    }
+
+    /**
+     * @param aJobprogress the jobprogress to set
+     */
+    public static void setJobprogress(int aJobprogress) {
+        jobprogress = aJobprogress;
+    }
+
+    /**
+     * @return the jobDone
+     */
+    public static JobDone getJobDone() {
+        return jobDone;
+    }
+
+    /**
+     * @param aJobDone the jobDone to set
+     */
+    public static void setJobDone(JobDone aJobDone) {
+        jobDone = aJobDone;
+    }
+
+    /**
+     * @return the marketWindow
+     */
+    public static MarketWindow getMarketWindow() {
+        return marketWindow;
+    }
+
+    /**
+     * @param aMarketWindow the marketWindow to set
+     */
+    public static void setMarketWindow(MarketWindow aMarketWindow) {
+        marketWindow = aMarketWindow;
+    }
+
+    /**
+     * @return the userSettings
+     */
+    public static UserSettings getUserSettings() {
+        return userSettings;
+    }
+
+    /**
+     * @param aUserSettings the userSettings to set
+     */
+    public static void setUserSettings(UserSettings aUserSettings) {
+        userSettings = aUserSettings;
+    }
     
     
 }

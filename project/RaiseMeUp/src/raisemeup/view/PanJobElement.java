@@ -47,8 +47,10 @@ public class PanJobElement extends javax.swing.JPanel {
             Logger.getLogger(PetWindow.class.getName()).log(Level.SEVERE, "Cannot load Job!", ex);
             return;
         }
-        image = RaiseMeUp.resizeImage(image, image.getType(), 214, 150);
-        lblJobDisplay.setIcon(new ImageIcon(image));
+        if(image!=null) {
+            image = RaiseMeUp.resizeImage(image, image.getType(), 214, 150);
+            lblJobDisplay.setIcon(new ImageIcon(image));
+        }
     }
     
     /**
@@ -151,7 +153,11 @@ public class PanJobElement extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void butBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butBackActionPerformed
-        // TODO add your handling code here:
+        RaiseMeUp.getJobsWindow().setVisible(false);
+        RaiseMeUp.setOnJob(true);
+        RaiseMeUp.setCurrentJob(job);
+        RaiseMeUp.newJobOwned(RaiseMeUp.getCurrentPet(), job, 0);
+        RaiseMeUp.getPetWindow().onJob();
     }//GEN-LAST:event_butBackActionPerformed
 
 

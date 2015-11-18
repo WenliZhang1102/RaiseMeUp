@@ -15,7 +15,7 @@ public class Food extends Item{
     private int valuecat;
     private int valuefish;
     private int valuepenguin;
-    private String image;
+    
 
     /**
      * @return the valuedog
@@ -73,19 +73,7 @@ public class Food extends Item{
         this.valuepenguin = valuepenguin;
     }
 
-    /**
-     * @return the image
-     */
-    public String getImage() {
-        return image;
-    }
-
-    /**
-     * @param image the image to set
-     */
-    public void setImage(String image) {
-        this.image = image;
-    }
+    
     
     
     

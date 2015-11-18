@@ -14,7 +14,6 @@ public class Upgrade extends Item{
     private String property;
     private String species;
     private int value;
-    private String image;
 
     /**
      * @return the property
@@ -56,20 +55,6 @@ public class Upgrade extends Item{
      */
     public void setValue(int value) {
         this.value = value;
-    }
-
-    /**
-     * @return the image
-     */
-    public String getImage() {
-        return image;
-    }
-
-    /**
-     * @param image the image to set
-     */
-    public void setImage(String image) {
-        this.image = image;
     }
     
     

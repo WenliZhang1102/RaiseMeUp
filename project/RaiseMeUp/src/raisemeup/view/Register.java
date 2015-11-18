@@ -5,9 +5,46 @@
  */
 package raisemeup.view;
 
+
+import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.security.NoSuchProviderException;
 import java.util.Arrays;
+
 import java.util.regex.Pattern;
+
+import javax.mail.*;
 import raisemeup.control.RaiseMeUp;
+
+
+
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
+
+import java.util.Properties;
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 /**
  *
@@ -15,6 +52,10 @@ import raisemeup.control.RaiseMeUp;
  */
 public class Register extends javax.swing.JFrame {
 
+    static Properties mailServerProperties;
+	static Session getMailSession;
+	static MimeMessage generateMailMessage;
+    
     private static final Pattern rfc2822 = Pattern.compile(
         "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
     );
@@ -201,6 +242,52 @@ public class Register extends javax.swing.JFrame {
             RaiseMeUp.setLogin(new Login());
             this.setVisible(false);
             RaiseMeUp.getLogin().setVisible(true);
+          /*  
+           
+             Thread sendRegEmail = new Thread(new Runnable() {
+                
+                @Override
+                public void run() {
+                    
+                    String host = "smtp.gmail.com";
+                    int port = 465;
+                    String username = "rf.user.123";
+                    String password = "rf_pass_123";
+                    Properties props = new Properties();
+                    props.put("mail.smtps.auth", "true");
+
+                    Session session = Session.getInstance(props);
+                    
+                    try {
+                        
+                        Message msg = new MimeMessage(session);
+                        //msg.setFrom(new InternetAddress("szarnyaljonvelunk@gmail.com"));
+                        msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(txtEmail.getText()));
+                        msg.setSubject("RaiseMeUp registration");
+                        System.out.println("Ez még megvolt");
+                        msg.setContent("Dear " + txtUsername.getText() + 
+                            ",\nWe are very happy to announce you that your registration was succesful.\n"
+                                + "Your username and password are:\n  " + txtUsername.getText() + "\n"
+                                + "  " + new String(pwfRegister.getPassword()) + "\n"
+                                + "Please keep safe these datas!\n\n"
+                                + "Yours sincerely:\nThe DevTest Team", "text/plain; charset=utf-8");
+                        System.out.println("Ez már nem");
+                        Transport t = session.getTransport("smtps");
+                        t.connect(InetAddress.getByName(host).getCanonicalHostName(), port, username, password);
+                        t.sendMessage(msg, msg.getAllRecipients());
+                        t.close();
+                        System.out.println("E-mail elkuldve: " + txtEmail.getText());
+                    } catch (MessagingException e) {
+                        e.printStackTrace();
+                    } catch (UnknownHostException e) {
+                        e.printStackTrace();
+                    }
+                }            		
+            });
+
+            sendRegEmail.start();
+        */
+            this.dispose();
         }
         
     }//GEN-LAST:event_butConfirmActionPerformed
