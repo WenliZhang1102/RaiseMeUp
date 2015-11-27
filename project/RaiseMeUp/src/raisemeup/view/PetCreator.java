@@ -34,6 +34,8 @@ public class PetCreator extends javax.swing.JFrame {
     private String[] fishnames = {"FishGold","FishSilver","FishPurpleYellow","FishStripes"};
     private JButton[] penguins = new JButton[2];
     private String[] penguinnames = {"Penguin","PenguinTie"};
+    private JButton[] pigs = new JButton[3];
+    private String[] pignames = {"Pig","Antlapig"};
     
     private String chosenType, chosenVariant, chosenImage;
     
@@ -71,6 +73,7 @@ public class PetCreator extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         scpPenguins = new javax.swing.JScrollPane();
         panPenguins = new javax.swing.JPanel();
+        panPigs = new javax.swing.JPanel();
         butOk = new javax.swing.JButton();
         butBack = new javax.swing.JButton();
 
@@ -197,6 +200,19 @@ public class PetCreator extends javax.swing.JFrame {
         );
 
         tabAnimals2.addTab("Penguins", jPanel4);
+
+        javax.swing.GroupLayout panPigsLayout = new javax.swing.GroupLayout(panPigs);
+        panPigs.setLayout(panPigsLayout);
+        panPigsLayout.setHorizontalGroup(
+            panPigsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 442, Short.MAX_VALUE)
+        );
+        panPigsLayout.setVerticalGroup(
+            panPigsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 180, Short.MAX_VALUE)
+        );
+
+        tabAnimals2.addTab("Pigs", panPigs);
 
         butOk.setFont(new java.awt.Font("Hobo Std", 0, 14)); // NOI18N
         butOk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/OkButton.png"))); // NOI18N
@@ -411,7 +427,7 @@ public class PetCreator extends javax.swing.JFrame {
         panFishes.repaint();
         panFishes.revalidate();
         
-        //FishPictures
+        //PenguinPictures
         for(int i=0; i<2; i++) {
             try {
                 image = ImageIO.read(getClass().getResource("/images/" +penguinnames[i] + ".png"));
@@ -440,7 +456,33 @@ public class PetCreator extends javax.swing.JFrame {
         panPenguins.repaint();
         panPenguins.revalidate();
         
-        
+        //PigPictures
+        for(int i=0; i<2; i++) {
+            try {
+                image = ImageIO.read(getClass().getResource("/images/" +pignames[i] + ".png"));
+            } catch (IOException ex) {
+                Logger.getLogger(PetWindow.class.getName()).log(Level.SEVERE, "Cannot load Pigs!", ex);
+            }
+            image = RaiseMeUp.resizeImage(image, image.getType(), 150);
+            pigs[i]=new JButton(new ImageIcon(image));
+            pigs[i].setCursor(new Cursor(Cursor.HAND_CURSOR));
+            panPigs.setLayout(new GridLayout());
+            panPigs.add(pigs[i]);
+            pigs[i].setLocation(i*160, 300);
+            //Listener
+            pigs[i].addActionListener(new ActionListener() {
+                
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    for(int j=0; j<2; j++)
+                        if(e.getSource() == pigs[j]){
+                            pigAction(j);                              
+                        }
+                }
+            });
+        }
+        panDogs.repaint();
+        panDogs.revalidate();
         
     }
     
@@ -508,32 +550,40 @@ public class PetCreator extends javax.swing.JFrame {
         else { chosenVariant="tie"; chosenImage=penguinnames[1]; }
     }
     
+    public void pigAction(int which) {
+        BufferedImage image=null;
+        try {
+            image = ImageIO.read(getClass().getResource("/images/" +pignames[which] + ".png"));
+        } catch (IOException ex) {
+            Logger.getLogger(PetCreator.class.getName()).log(Level.SEVERE, "Cannot load Pigs!", ex);
+        }
+        lblPetDisplay.setIcon(new ImageIcon(RaiseMeUp.resizeImage(image, image.getType(), 200)));
+        
+        //Determining chosen type and variant
+        chosenType="dog";
+        if(which==0) { chosenVariant="pig"; chosenImage=pignames[0]; }
+        else { chosenVariant="antla"; chosenImage=pignames[1]; }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton butBack;
     private javax.swing.JButton butOk;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JLabel lblCreateYourPet;
     private javax.swing.JLabel lblPetDisplay;
     private javax.swing.JLabel lblPetName;
-    private javax.swing.JPanel panCats;
-    private javax.swing.JPanel panCats1;
     private javax.swing.JPanel panCats2;
     private javax.swing.JPanel panDogs;
     private javax.swing.JPanel panFishes;
     private javax.swing.JPanel panPenguins;
-    private javax.swing.JScrollPane scpCats;
-    private javax.swing.JScrollPane scpCats1;
+    private javax.swing.JPanel panPigs;
     private javax.swing.JScrollPane scpCats2;
     private javax.swing.JScrollPane scpDogs;
     private javax.swing.JScrollPane scpFishes;
     private javax.swing.JScrollPane scpPenguins;
-    private javax.swing.JTabbedPane tabAnimals;
-    private javax.swing.JTabbedPane tabAnimals1;
     private javax.swing.JTabbedPane tabAnimals2;
     private javax.swing.JTextField txtPetName;
     // End of variables declaration//GEN-END:variables

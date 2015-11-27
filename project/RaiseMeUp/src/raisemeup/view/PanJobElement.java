@@ -46,6 +46,9 @@ public class PanJobElement extends javax.swing.JPanel {
         } catch (IOException ex) {
             Logger.getLogger(PetWindow.class.getName()).log(Level.SEVERE, "Cannot load Job!", ex);
             return;
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(PetWindow.class.getName()).log(Level.SEVERE, "Cannot load Job!", ex);
+            return;
         }
         if(image!=null) {
             image = RaiseMeUp.resizeImage(image, image.getType(), 214, 150);

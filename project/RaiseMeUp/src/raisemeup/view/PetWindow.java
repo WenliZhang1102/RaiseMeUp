@@ -878,6 +878,7 @@ public class PetWindow extends javax.swing.JFrame {
         }
         
         if (RaiseMeUp.getCurrentPet().getType().equals("fish")) lblPetDisplay.setSize(new Dimension(lblPetDisplay.getSize().width + 150, lblPetDisplay.getSize().height));
+        if (RaiseMeUp.getCurrentPet().getType().equals("dog") && (RaiseMeUp.getCurrentPet().getVariant().equals("pig") || RaiseMeUp.getCurrentPet().getVariant().equals("antla"))) lblPetDisplay.setSize(new Dimension(lblPetDisplay.getSize().width + 150, lblPetDisplay.getSize().height));
         image = RaiseMeUp.resizeImage(image, image.getType(), 205);
         lblEmotionDislpay.setIcon(new ImageIcon(image));
         panPetDisplay.setLayout(null);
